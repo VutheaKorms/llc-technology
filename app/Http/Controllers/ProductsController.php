@@ -32,7 +32,7 @@ class ProductsController extends Controller
 
     public function show($id)
     {
-        $products = Product::with('categories')->find($id);
+        $products = Product::with('categories','brand','product_photos')->find($id);
         return response($products);
     }
 
@@ -98,7 +98,7 @@ class ProductsController extends Controller
     public function ReviewProduct($id) {
 
         //$item = Product::find($id);
-        $products = Product::with('product_photos')->find($id);
+        $products = ProductPhoto::with('product')->find($id);
 
         return response($products);
     }

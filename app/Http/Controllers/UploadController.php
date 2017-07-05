@@ -5,25 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductPhoto;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Access\Response;
 use App\Http\Requests\UploadRequest;
 
 class UploadController extends Controller
 {
-    public function uploadForm()
+
+    public function __construct(Response $response)
     {
-        return view('upload_form');
+        $this->response = $response;
     }
 
-    public function uploadSubmit(UploadRequest $request)
+    public function show($id)
     {
-        $product = Product::create($request->all());
-        foreach ($request->photos as $photo) {
-            $filename = $photo->store('photos');
-            ProductPhoto::create([
-                'product_id' => 1,
-                'filename' => $filename
-            ]);
-        }
-        return 'Upload successful!';
+        $productPhoto = ProductPhoto::with('product')->find($id);
+        return response($productPhoto);
     }
+
+
 }
