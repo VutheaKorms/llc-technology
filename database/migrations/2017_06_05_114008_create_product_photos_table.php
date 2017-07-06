@@ -13,18 +13,19 @@ class CreateProductPhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_photos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->string('name')->nullable();
-            $table->string('size')->nullable();
-            $table->string('type')->nullable();
-            $table->string('thumb_path')->nullable();
-            $table->string('path')->nullable();
-            $table->boolean('status')->default(true);
-            $table->timestamps();
-        });
+//        Schema::create('product_photos', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->integer('product_id')->unsigned();
+//            $table->foreign('product_id')->references('id')->on('products');
+//            $table->string('name')->nullable();
+//            $table->string('size')->nullable();
+//            $table->string('type')->nullable();
+//            $table->string('thumb_path')->nullable();
+//            $table->string('path')->nullable();
+//            $table->boolean('status')->default(true);
+//            $table->timestamps();
+//
+//        });
     }
 
     /**

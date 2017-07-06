@@ -13,16 +13,16 @@ class CreatePhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('photos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('size')->nullable();
-            $table->string('type')->nullable();
-            $table->string('thumb_path')->nullable();
-            $table->string('path')->nullable();
-            $table->boolean('status')->default(true);
-            $table->timestamps();
-        });
+//        Schema::create('photos', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('name')->nullable();
+//            $table->string('size')->nullable();
+//            $table->string('type')->nullable();
+//            $table->string('thumb_path')->nullable();
+//            $table->string('path')->nullable();
+//            $table->boolean('status')->default(true);
+//            $table->timestamps();
+//        });
     }
 
     /**

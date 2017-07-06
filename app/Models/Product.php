@@ -32,10 +32,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\Category','category_id');
     }
 
-    public function product_photos()
-    {
-        return $this->hasMany('App\Models\ProductPhoto','product_id','id');
-        //return $this->hasMany('App\Models\ProductPhoto','product_id','id');
-    }
+
+
 
 }

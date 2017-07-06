@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductPhoto;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use Session;
+use DB;
 
 class ProductsController extends Controller
 {
@@ -82,8 +84,8 @@ class ProductsController extends Controller
         move_uploaded_file($tempPath, $uploadPath);
 
         $upload = new ProductPhoto();
-        $upload->name = "'" . $uploadPath . "'";
         $upload->product_id = $id;
+        $upload->name = "'" . $uploadPath . "'";
 
         $upload->save();
 
@@ -97,10 +99,22 @@ class ProductsController extends Controller
 
     public function ReviewProduct($id) {
 
-        //$item = Product::find($id);
-        $products = ProductPhoto::with('product')->find($id);
+        $products = DB::table('products')
+            ->select('products.*','product_photos.name','product_photos.product_id','product_photos.size','brands.name')
+            ->join('brands','brands.id', '=', 'products.brand_id')
+            ->join('product_photos', 'product_photos.product_id', '=', 'products.id')
+            ->where('product_photos.product_id', $id)
+            ->get();
+
 
         return response($products);
+
+//        $photos = DB::table('photos')
+//            ->join('products', 'product.id', '=', 'photos.user_id')
+//            ->join('followers', 'followers.user_id', '=', 'users.id')
+//            ->where('followers.follower_id', '=', 3)
+//            ->get();
+//        return response($photos);
     }
 
     public function destroy($id)
