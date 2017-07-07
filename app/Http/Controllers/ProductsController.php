@@ -31,11 +31,34 @@ class ProductsController extends Controller
         return response($products);
     }
 
+    public function show($id) {
 
-    public function show($id)
-    {
-        $products = Product::with('categories','brand','product_photos')->find($id);
+        $products = DB::table('products')
+            ->select('products.description as description',
+            'products.price as price',
+            'products.status as status',
+            'products.created_at as created_at',
+            'products.product_name as product_name',
+            'products.product_code as product_code',
+            'brands.name as brand_name',
+            'categories.name as category_name')
+            ->join('brands','brands.id', '=', 'products.brand_id')
+            ->join('categories','categories.id', '=' ,'products.category_id')
+            ->where('products.id', $id)
+            ->get();
+
         return response($products);
+    }
+
+    public function showPhoto($id)
+    {
+        $product_photo = DB::table('product_photos')
+            ->leftJoin('products','products.id','=','product_photos.product_id')
+            ->select('product_photos.product_id as product_id','product_photos.name as image')
+            ->where('product_photos.product_id',$id)
+            ->get();
+
+        return response($product_photo);
     }
 
     public function edit($id)
@@ -59,13 +82,6 @@ class ProductsController extends Controller
         $create = Product::create($input);
 
         $id = Session::put('progress', $create->id);
-        $value = $request->session()->get('progress');
-
-        //$id = Session::get('progress');
-
-        $file = fopen("test.txt","a");
-        fwrite($file,"instore id: ". $value);
-        fclose($file);
 
         return response($id);
     }
@@ -73,48 +89,21 @@ class ProductsController extends Controller
     public function upload(Request $request)
     {
         $id = $request->session()->get('progress');
-        $file = fopen("test.txt","a");
-        fwrite($file,"get id: ". $id);
-        fclose($file);
 
         $tempPath = $_FILES['file']['tmp_name'];
-
         $uploadPath = 'uploads/' . $_FILES['file']['name'];
+        $size = $_FILES['file']['size'];
+        $type = $_FILES['file']['type'];
 
         move_uploaded_file($tempPath, $uploadPath);
 
         $upload = new ProductPhoto();
         $upload->product_id = $id;
-        $upload->name = "'" . $uploadPath . "'";
+        $upload->name = "$uploadPath";
+        $upload->size = "$size";
+        $upload->type = "$type";
 
         $upload->save();
-
-        //$answer = array('answer' => 'File transfer completed', 'uploadPath' => $uploadPath);
-        //$json = json_encode($answer);
-
-        //echo $json;
-
-
-    }
-
-    public function ReviewProduct($id) {
-
-        $products = DB::table('products')
-            ->select('products.*','product_photos.name','product_photos.product_id','product_photos.size','brands.name')
-            ->join('brands','brands.id', '=', 'products.brand_id')
-            ->join('product_photos', 'product_photos.product_id', '=', 'products.id')
-            ->where('product_photos.product_id', $id)
-            ->get();
-
-
-        return response($products);
-
-//        $photos = DB::table('photos')
-//            ->join('products', 'product.id', '=', 'photos.user_id')
-//            ->join('followers', 'followers.user_id', '=', 'users.id')
-//            ->where('followers.follower_id', '=', 3)
-//            ->get();
-//        return response($photos);
     }
 
     public function destroy($id)
@@ -135,120 +124,5 @@ class ProductsController extends Controller
                 //Show error page
         }
     }
-
-//    public function upload(Request $request)
-//    {
-//        //$tempPath = $_FILES['file']['tmp_name'];
-//
-//        //$tmp_input = Input::all();
-//        //$tempPath  = $tmp_input['file']['tmp_name'];
-//        //print_r($tempPath); exit(0);
-//        //$uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
-//
-//        //$uploadPath = 'uploads/' . $_FILES['file']['name'];
-//
-//        //move_uploaded_file($tempPath, $uploadPath);
-//        $product_id  = $request->input('product_id');
-//
-//        $upload = new ProductPhoto();
-//        //$upload->filename = "'" . $uploadPath . "'";
-//        $upload->product_id = $product_id;
-//
-//        $upload->save();
-//
-//        //$answer = array('answer' => 'File transfer completed', 'uploadPath' => $uploadPath);
-//        //$json = json_encode($answer);
-//
-//        //echo $json;
-//    }
-
-//    function getProductId(Request $request) {
-//        $product_id = $request['product_id'];
-//        $newProId = $product_id;
-//        return $newProId;
-//
-//    }
-
-//    public function getProductId(Request $request)
-//    {
-//        $product = new Product();
-//        $product->product_id = $request->input('product_id');
-//        $id = $product->product_id;
-//        return $id;
-//
-//        //print_r($product->product_id);
-//
-////        //$item = Product::find($newProId);
-////        $item =Product::where('id',$newProId)->first();
-////        $this->productId = $item;
-////        return $this->productId;
-////        print_r($this->productId);
-//    }
-
-//    public function method2()
-//    {
-//        return $this->productId;
-//    }
-
-
-//    public function getProductId($newProductId) {
-//        $this->productId = $newProductId;
-//        //$value = Session::put('productId', $newProductId);
-//        //$value=Session::get('productId');
-//        return $this->productId;
-//        print_r($this->productId);
-//
-//    }
-
-//    public function upload(Request $request)
-//    {
-//        $this->productId = $request->input('product_id');
-//        $product_id = $this->getProductId(61);
-//
-//        $upload = new ProductPhoto();
-//        //$upload->filename = "'" . $uploadPath . "'";
-//        $upload->product_id = $product_id;
-//
-//        $upload->save();
-//
-//
-////        $product_id  = $request->input('productId');
-////        echo $this->getProductId($product_id);
-////        print_r($this->getProductId($product_id));
-//
-//        //echo $this->method2();
-//
-//        //return $this->productId;
-////        Session::get('productId');
-//        //$product_id = $this->getProductId('productId');
-//        //print_r($this->productId);
-//
-//        //return $this->productId;
-//        //print_r($this->productId);
-//        //$tempPath = $_FILES['file']['tmp_name'];
-//
-//        //$tmp_input = Input::all();
-//        //$tempPath  = $tmp_input['file']['tmp_name'];
-//        //print_r($tempPath); exit(0);
-//        //$uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $_FILES[ 'file' ][ 'name' ];
-//
-//        //$uploadPath = 'uploads/' . $_FILES['file']['name'];
-//
-//        //move_uploaded_file($tempPath, $uploadPath);
-////        $product_id  = $request->input('product_id');
-////        //echo $product_id;
-////        print_r($product_id);
-//
-////        $upload = new ProductPhoto();
-////        //$upload->filename = "'" . $uploadPath . "'";
-////        $upload->product_id = $product_id;
-////
-////        $upload->save();
-//
-//        //$answer = array('answer' => 'File transfer completed', 'uploadPath' => $uploadPath);
-//        //$json = json_encode($answer);
-//
-//        //echo $json;
-//    }
 
 }

@@ -218,21 +218,21 @@ angular
         }
     })
 
-    .state('dashboard.product-review',{
-        url:'/product/review',
-        controller: 'ProductReviewCtrl',
-        templateUrl:'backend/app/views/products/review-product.html',
-        resolve: {
-            loadMyFiles:function($ocLazyLoad) {
-                return $ocLazyLoad.load({
-                    name:'app',
-                    files:[
-                        'backend/app/scripts/controllers/products/review.js'
-                    ]
-                })
-            }
-        }
-    })
+    //.state('dashboard.product-review',{
+    //    url:'/product/review',
+    //    controller: 'ProductReviewCtrl',
+    //    templateUrl:'backend/app/views/products/review-product.html',
+    //    resolve: {
+    //        loadMyFiles:function($ocLazyLoad) {
+    //            return $ocLazyLoad.load({
+    //                name:'app',
+    //                files:[
+    //                    'backend/app/scripts/controllers/products/review.js'
+    //                ]
+    //            })
+    //        }
+    //    }
+    //})
 
     .state('dashboard.product-view',{
         url:'/product/view/:id',

@@ -19,19 +19,9 @@ angular.module('app')
         });
 
 
-        function goToReview() {
-            $state.go('dashboard.product-review');
+        function goToBack() {
+            $state.go('dashboard.product');
         }
-
-        //$scope.submit = function(){
-        //    $http({
-        //        method: 'POST',
-        //        url: 'api/test/upload',
-        //
-        //        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        //    })
-        //}
-
 
 
         // CALLBACKS
@@ -68,9 +58,9 @@ angular.module('app')
             console.info('onCompleteItem', fileItem, response, status, headers);
         };
         uploader.onCompleteAll = function() {
-            console.info('onCompleteAll');
+            //console.info('onCompleteAll');
             Notification.success('Successfully saved');
-            goToReview();
+            goToBack();
         };
 
 
