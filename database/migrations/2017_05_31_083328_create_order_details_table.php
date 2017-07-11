@@ -13,19 +13,19 @@ class CreateOrderDetailsTable extends Migration
      */
     public function up()
     {
-//        Schema::create('order_details', function (Blueprint $table) {
-//            $table->increments('id');
-//            $table->integer('order_id')->unsigned();
-//            $table->integer('product_id')->unsigned()->index();
-//            $table->integer('quantity');
-//            $table->float('price');
-//            $table->float('sub_total');
-//            $table->boolean('status')->default(true);
-//            $table->timestamps();
-//            $table->softDeletes();
-//
-//            $table->foreign('order_id')->references('id')->on('orders');
-//        });
+        Schema::create('order_details', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('order_id')->unsigned();
+            $table->integer('product_id')->unsigned()->index();
+            $table->integer('quantity');
+            $table->float('price');
+            $table->float('sub_total');
+            $table->boolean('status')->default(true);
+            $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('order_id')->references('id')->on('orders');
+        });
     }
 
     /**

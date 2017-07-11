@@ -59,7 +59,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Brand</th>
                                 <th>Description</th>
                                 <th>Date</th>
                                 <th>Status</th>
@@ -70,7 +69,6 @@
                             <tr class="odd gradeX" dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{value.name}}</td>
-                                <td>{{value.brand.name}}</td>
                                 <td>{{value.description}}</td>
                                 <td>{{value.created_at}}</td>
                                 <td>
@@ -125,13 +123,13 @@
                                     <div class="form-group">
                                         <input ng-model="form.name" type="text" placeholder="Name" name="title" class="form-control" required />
                                     </div>
-                                    <strong>Brand : </strong>
-                                    <div class="form-group">
-                                        <select ng-model="selectedBrand" class="form-control" required
-                                                ng-options="item.id as item.name for item in brands">
-                                            <option value="">Select</option>
-                                        </select>
-                                    </div>
+                                    <!--<strong>Brand : </strong>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<select ng-model="selectedBrand" class="form-control" required-->
+                                                <!--ng-options="item.id as item.name for item in brands">-->
+                                            <!--<option value="">Select</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
                                     <strong>Description : </strong>
                                     <div class="form-group" >
                                         <textarea ng-model="form.description" rows="5" class="form-control">
@@ -169,13 +167,13 @@
                                     <div class="form-group">
                                         <input ng-model="form.name" type="text" placeholder="Name" name="name" class="form-control" required />
                                     </div>
-                                    <strong>Brand : </strong>
-                                    <div class="form-group">
-                                        <select ng-model="selectedBrand" class="form-control" required
-                                                ng-options="item.id as item.name for item in brands">
-                                            <option value="">Select</option>
-                                        </select>
-                                    </div>
+                                    <!--<strong>Brand : </strong>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<select ng-model="selectedBrand" class="form-control" required-->
+                                                <!--ng-options="item.id as item.name for item in brands">-->
+                                            <!--<option value="">Select</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
                                     <strong>Description : </strong>
                                     <div class="form-group" >
                                     <textarea ng-model="form.description" rows="5" name="description" class="form-control">

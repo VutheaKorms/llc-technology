@@ -17,12 +17,9 @@ class CreateCategoriesTable extends Migration
 //            $table->increments('id');
 //            $table->string('name',50)->unique();
 //            $table->string('description', 255)->nullable();
-//            $table->integer('brand_id')->unsigned()->index();
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();
 //            $table->softDeletes();
-//
-//            $table->foreign('brand_id')->references('id')->on('brands');
 //        });
     }
 

@@ -12,17 +12,17 @@ class Product extends Model
     protected $fillable = [
         'product_code',
         'product_name',
+        'product_color',
         'description',
         'price',
-        'brand_id',
         'category_id',
         'status',
     ];
 
-    public function brand()
-    {
-        return $this->belongsTo('App\Models\Brand','brand_id');
-    }
+//    public function brand()
+//    {
+//        return $this->belongsTo('App\Models\Brand','brand_id');
+//    }
 
     /**
      * Get the category that the product belongs to.

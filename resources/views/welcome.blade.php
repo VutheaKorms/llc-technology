@@ -104,16 +104,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!--Less styles -->
-    <!-- Other Less css file //different less files has different color scheam
-     <link rel="stylesheet/less" type="text/css" href="themes/less/simplex.less">
-     <link rel="stylesheet/less" type="text/css" href="themes/less/classified.less">
-     <link rel="stylesheet/less" type="text/css" href="themes/less/amelia.less">  MOVE DOWN TO activate
-     -->
-    <!--<link rel="stylesheet/less" type="text/css" href="themes/less/bootshop.less">
-    <script src="themes/js/less.js" type="text/javascript"></script> -->
 
-    <!-- Bootstrap style -->
     <link id="callCss" rel="stylesheet" href="frontend/themes/bootshop/bootstrap.min.css" media="screen"/>
 
 
@@ -124,6 +115,11 @@
     <!-- Google-code-prettify -->
     <link href="frontend/themes/js/google-code-prettify/prettify.css" rel="stylesheet"/>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="frontend/scripts/app.js"></script>
+    <script src="frontend/scripts/home.controller.js"></script>
+    <script src="backend/app/scripts/controllers/products/product.js"></script>
+    <script src="backend/app/packages/dirPagination.js"></script>
+
     <!-- fav and touch icons -->
     <link rel="shortcut icon" href="frontend/themes/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="frontend/themes/images/ico/apple-touch-icon-144-precomposed.png">
@@ -132,8 +128,7 @@
     <link rel="apple-touch-icon-precomposed" href="frontend/themes/images/ico/apple-touch-icon-57-precomposed.png">
     <style type="text/css" id="enject"></style>
 </head>
-<body ng-app="app">
-
+<body ng-app="main" ng-controller="IdController">
 <div id="header">
     <div class="container">
         {{--<div id="welcomeLine" class="row">--}}
@@ -152,25 +147,21 @@
         {{--</div>--}}
         <!-- Navbar ================================================== -->
         <div id="logoArea" class="navbar">
-            <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
+            {{--<a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">--}}
+                {{--<span class="icon-bar"></span>--}}
+                {{--<span class="icon-bar"></span>--}}
+                {{--<span class="icon-bar"></span>--}}
+            {{--</a>--}}
             <div class="navbar-inner">
                 {{--<a class="brand" href="index.html"><img src="frontend/themes/images/logo.png" alt="Bootsshop"/></a>--}}
-                <a class="brand" href="/">LLC-TEACHNOLOGY</a>
+                <a class="brand" href="/">LLC-TECHNOLOGY</a>
                 <form class="form-inline navbar-search" method="post" action="products.html" >
                     <input id="srchFld" class="srchTxt" type="text" />
                     <select class="srchTxt">
                         <option>All</option>
-
-                            @foreach ($brands as $brand)
-                            <option>
-                                {{$brand->name}}
-                            </option>
-                            @endforeach
-
+                        <option ng-repeat="b in categories">
+                            [[b.name]]
+                        </option>
                         {{--<option>CLOTHES </option>--}}
                         {{--<option>FOOD AND BEVERAGES </option>--}}
                         {{--<option>HEALTH & BEAUTY </option>--}}
@@ -310,39 +301,24 @@
         <div class="row">
             <!-- Sidebar ================================================== -->
             <div id="sidebar" class="span3">
-                <div class="well well-small"><a id="myCart" href="product_summary.html">
-                        <img src="frontend/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>
+                {{--<div class="well well-small"><a id="myCart" href="product_summary.html">--}}
+                        {{--<img src="frontend/themes/images/ico-cart.png" alt="cart">3 Items in your cart  <span class="badge badge-warning pull-right">$155.00</span></a></div>--}}
+
+
+
+                <li dir-paginate="value in data | itemsPerPage:5 | filter:showcat" total-items="totalItems">
+                    [[ value.product_name ]]
+                </li>
+
+                {{--<li ng-repeat='p in products | toArray:false | filter:showcat'>[[ p.product_name ]]</li>--}}
+
 
                 <ul id="sideManu" class="nav nav-tabs nav-stacked">
-                    @foreach ($brands as $brand)
-
-                        <li class="subMenu open"><a> {{$brand->name}}</a>
-                            <ul>
-                                @foreach ($categories as $category)
-                                <li>
-                                    <a href="products.html"><i class="icon-chevron-right"></i>{{$category->name}}</a>
-                                </li>
-                                {{--<li><a class="active" href="products.html"><i class="icon-chevron-right"></i>Cameras (100) </a></li>--}}
-                                {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Computers, Tablets & laptop (30)</a></li>--}}
-                                {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>--}}
-                                {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Sound & Vision (15)</a></li>--}}
-                                @endforeach
-                            </ul>
-                        </li>
-
-
-                    @endforeach
-                </ul>
-
-                {{--<ul id="sideManu" class="nav nav-tabs nav-stacked">--}}
-                    {{--<li class="subMenu open"><a> ELECTRONICS [230]</a>--}}
-                        {{--<ul>--}}
-                            {{--<li><a class="active" href="products.html"><i class="icon-chevron-right"></i>Cameras (100) </a></li>--}}
-                            {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Computers, Tablets & laptop (30)</a></li>--}}
-                            {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Mobile Phone (80)</a></li>--}}
-                            {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Sound & Vision (15)</a></li>--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
+                    <li class="subMenu open"><a> CATEGORIES </a>
+                        <ul>
+                            <li ng-repeat='c in categories'><a class="active" href="" ng-click='setShowCat(c.id)'><i class="icon-chevron-right"></i> [[ c.name ]] </a></li>
+                        </ul>
+                    </li>
                     {{--<li class="subMenu"><a> CLOTHES [840] </a>--}}
                         {{--<ul style="display:none">--}}
                             {{--<li><a href="products.html"><i class="icon-chevron-right"></i>Women's Clothing (45)</a></li>--}}
@@ -369,7 +345,7 @@
                     {{--<li><a href="products.html">HEALTH & BEAUTY [18]</a></li>--}}
                     {{--<li><a href="products.html">SPORTS & LEISURE [58]</a></li>--}}
                     {{--<li><a href="products.html">BOOKS & ENTERTAINMENTS [14]</a></li>--}}
-                {{--</ul>--}}
+                </ul>
                 <br/>
                 <div class="thumbnail">
                     <img src="frontend/themes/images/products/panasonic.jpg" alt="Bootshop panasonoc New camera"/>
@@ -752,5 +728,5 @@
         </div>
     </div>
 </div>
-{{--<span id="themesBtn"></span>--}}
+<span id="themesBtn"></span>
 </body>

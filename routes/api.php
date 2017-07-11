@@ -17,9 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('brands','BrandsController');
-Route::put('brands/disable/{id}','BrandsController@disable');
-Route::get('brands/status/{status}','BrandsController@getAllActive');
+//Route::resource('brands','BrandsController');
+//Route::put('brands/disable/{id}','BrandsController@disable');
+//Route::get('brands/status/{status}','BrandsController@getAllActive');
 
 Route::resource('categories','CategoriesController');
 Route::put('categories/disable/{id}','CategoriesController@disable');
@@ -33,3 +33,4 @@ Route::group(['middleware' => ['web']], function () {
 Route::post('test/upload','ProductsController@upload');
 Route::resource('photo','UploadController');
 Route::get('product/review/{id}','ProductsController@showPhoto');
+Route::get('products/getAll/{status}/cate/{cateId}','ProductsController@loadAllProductByCate');

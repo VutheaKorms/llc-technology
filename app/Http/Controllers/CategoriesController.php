@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
+use DB;
 
 class CategoriesController extends Controller
 {
@@ -25,11 +26,11 @@ class CategoriesController extends Controller
     {
         $input = $request->all();
         if($request->get('search')){
-            $categories = Category::with('brand')->where("name", "LIKE", "%{$request->get('search')}%")
+            $categories = Category::where("name", "LIKE", "%{$request->get('search')}%")
                 ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
                 ->paginate(5);
         }else{
-            $categories = Category::with('brand')->paginate(5);
+            $categories = Category::paginate(5);
         }
         return response($categories);
     }
@@ -41,7 +42,7 @@ class CategoriesController extends Controller
 
     public function show($id)
     {
-        $categories = Category::with('brand')->find($id);
+        $categories = Category::find($id);
         return response($categories);
     }
 
@@ -85,4 +86,6 @@ class CategoriesController extends Controller
             //Show error page
         }
     }
+
+
 }

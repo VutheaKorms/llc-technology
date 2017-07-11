@@ -22,11 +22,11 @@ class ProductsController extends Controller
     {
         $input = $request->all();
         if($request->get('search')){
-            $products = Product::with('brand','categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
+            $products = Product::with('categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
                 ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
                 ->paginate(5);
         }else{
-            $products = Product::with('brand','categories')->paginate(5);
+            $products = Product::with('categories')->paginate(5);
         }
         return response($products);
     }
@@ -40,9 +40,7 @@ class ProductsController extends Controller
             'products.created_at as created_at',
             'products.product_name as product_name',
             'products.product_code as product_code',
-            'brands.name as brand_name',
             'categories.name as category_name')
-            ->join('brands','brands.id', '=', 'products.brand_id')
             ->join('categories','categories.id', '=' ,'products.category_id')
             ->where('products.id', $id)
             ->get();
@@ -111,6 +109,23 @@ class ProductsController extends Controller
         return Product::where('id',$id)->delete();
     }
 
+    public function loadAllProductByCate($status,$cateId){
+        $products = DB::table('products')
+            ->select('products.id as product_id',
+                'products.product_name as product_name',
+                'products.product_code as product_code',
+                'products.status as product_status',
+                'categories.status as status',
+                'categories.id as category_id',
+                'categories.name as category_name')
+            ->join('categories','products.category_id', '=', 'categories.id')
+            ->where('products.status', $status, 'AND')
+            ->where('products.category_id', $cateId)
+            ->paginate(5);
+
+        return response($products);
+    }
+
     public  function disable(Request $request, $id)
     {
         try {
@@ -124,5 +139,7 @@ class ProductsController extends Controller
                 //Show error page
         }
     }
+
+
 
 }

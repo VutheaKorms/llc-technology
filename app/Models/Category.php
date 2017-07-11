@@ -17,17 +17,16 @@ class Category extends Model
     protected $fillable = [
         'name',
         'description',
-        'brand_id',
         'status',
     ];
 
-    public function brand()
-    {
-        return $this->belongsTo('App\Models\Brand','brand_id');
-    }
+//    public function brand()
+//    {
+//        return $this->belongsTo('App\Models\Brand','brand_id');
+//    }
 
     public function products()
     {
-        return $this->hasMany('App\Models\Product','brand_id','id');
+        return $this->hasMany('App\Models\Product','category_id','id');
     }
 }
