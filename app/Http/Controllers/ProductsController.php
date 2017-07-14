@@ -24,9 +24,9 @@ class ProductsController extends Controller
         if($request->get('search')){
             $products = Product::with('categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
                 ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
-                ->paginate(5);
+                ->paginate(6);
         }else{
-            $products = Product::with('categories')->paginate(5);
+            $products = Product::with('categories')->paginate(6);
         }
         return response($products);
     }
