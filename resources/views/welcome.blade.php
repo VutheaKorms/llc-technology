@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Bootshop online Shopping cart</title>
+    <title>LLC-TECHNOLOGY</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -36,7 +36,6 @@
 <body ng-app="app" ng-controller="IdController">
 <div id="header">
     <div class="container">
-
         <!-- Navbar ================================================== -->
         <div id="logoArea" class="navbar">
             <a id="smallScreen" data-target="#topMenu" data-toggle="collapse" class="btn btn-navbar">
@@ -46,20 +45,20 @@
             </a>
             <div class="navbar-inner">
                 {{--<a class="brand" href="index.html"><img src="frontend/themes/images/logo.png" alt="Bootsshop"/></a>--}}
-                <a class="brand" href="/">LLC-TECHNOLOTY</a>
-                <form class="form-inline navbar-search" method="post" action="products.html" >
-                    <input class="srchTxt" type="text" placeholder="search..."/>
-                    <select class="srchTxt">
-                        <option>All</option>
-                        <option ng-repeat="b in productCategory">
-                            [[b.name]]
-                        </option>
-                    </select>
-                    <button type="submit" id="submitButton" class="btn btn-primary">Go</button>
+                <a class="brand" href="/"><img src="frontend/themes/images/ico-cart.png" alt="LCC-TECHNOLOGY"/> LLC-TECHNOLOTY</a>
+                <form class="form-inline navbar-search" method="post" >
+                    <input class="srchTxt" ng-model="searchText" type="text" placeholder="search..."/>
+                    {{--<select class="srchTxt">--}}
+                        {{--<option>All</option>--}}
+                        {{--<option ng-repeat="b in productCategory">--}}
+                            {{--[[b.name]]--}}
+                        {{--</option>--}}
+                    {{--</select>--}}
+                    <button type="button" id="submitButton" class="btn btn-primary" ng-click="searchDB()">Go</button>
                 </form>
                 <ul id="topMenu" class="nav pull-right">
-                    <li class=""><a href="special_offer.html">Specials Offer</a></li>
-                    <li class=""><a href="normal.html">Delivery</a></li>
+                    {{--<li class=""><a href="special_offer.html">Specials Offer</a></li>--}}
+                    <li class=""><a href="normal.html">About</a></li>
                     <li class=""><a href="contact.html">Contact</a></li>
                     <li class="">
                         <a href="/admin" role="button"  style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
@@ -73,16 +72,16 @@
 <div id="carouselBlk">
     <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
+            {{--<div class="item active">--}}
+                {{--<div class="container">--}}
+                    {{--<a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/1.png" alt="special offers"/></a>--}}
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="item active">
-                <div class="container">
-                    <a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/1.png" alt="special offers"/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
                 <div class="container">
                     <a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/2.png" alt=""/></a>
                     <div class="carousel-caption">
@@ -350,31 +349,78 @@
                         </div>
                     </div>
                 </div>
-                <h4>Latest Products </h4>
-                <ul class="thumbnails">
-                    <li class="span3" dir-paginate="value in data | itemsPerPage:6 | filter:showcat" total-items="totalItems">
-                        <div class="thumbnail">
-                            <a  href="product_details.html"><img src="frontend/themes/images/products/6.jpg" alt=""/></a>
-                            <div class="caption">
-                                <h5>[[ value.product_name ]]</h5>
-                                {{--<p>--}}
-                                {{--[[value.description]] <br />--}}
-                                {{--[[value.product_code]] <br />--}}
-                                {{--[[value.price | currency]]<br />--}}
-                                {{--[[value.color]]<br />--}}
-                                {{--[[value.categories.name]]<br />--}}
-                                {{--[[value.description]]<br />--}}
-                                {{--[[value.created_at]]<br />--}}
-                                {{--</p>--}}
+                <h4>Products </h4>
+                <form class="form-horizontal span6">
+                    <div class="control-group">
+                        <label class="control-label alignL">Sort By </label>
+                        <select>
+                            <option>Priduct name A - Z</option>
+                            <option>Priduct name Z - A</option>
+                            <option>Priduct Stoke</option>
+                            <option>Price Lowest first</option>
+                        </select>
+                    </div>
+                </form>
 
-                                <h4 style="text-align:center"><a class="btn" href="product_details.html">
-                                        <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a>
-                                    <a class="btn btn-primary" href="#">$ [[value.price]]</a></h4>
+                <div id="myTab" class="pull-right">
+                    <a href="#listView" data-toggle="tab"><span class="btn btn-large"><i class="icon-list"></i></span></a>
+                    <a href="#blockView" data-toggle="tab"><span class="btn btn-large btn-primary"><i class="icon-th-large"></i></span></a>
+                </div>
+                <br class="clr"/>
+                <div class="tab-content">
+                    <div class="tab-pane" id="listView">
+                        <div class="row" dir-paginate="value in data | itemsPerPage:6 | filter:showcat" total-items="totalItems">
+                            <div class="span2">
+                                <img src="frontend/themes/images/products/3.jpg" alt=""/>
+                            </div>
+                            <div class="span4">
+                                <h3>New | Available</h3>
+                                <hr class="soft"/>
+                                <h5>[[ value.product_name ]]</h5>
+                                <p>
+                                    Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
+                                    that is why our goods are so popular..
+                                </p>
+                                <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+                                <br class="clr"/>
+                            </div>
+                            <div class="span3 alignR">
+                                <form class="form-horizontal qtyFrm">
+                                    <h3> $ [[value.price]]</h3>
+                                    <label class="checkbox">
+                                        <input type="checkbox">  Adds product to compair
+                                    </label><br/>
+
+                                    <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+                                    <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+
+                                </form>
                             </div>
                         </div>
-                    </li>
-
-                </ul>
+                        <hr class="soft"/>
+                    </div>
+                    <div class="tab-pane  active" id="blockView">
+                        <ul class="thumbnails">
+                            <li class="span3" dir-paginate="value in data | itemsPerPage:6 | filter:showcat" total-items="totalItems">
+                                <div class="thumbnail">
+                                    <a href="product_details.html"><img src="frontend/themes/images/products/3.jpg" alt=""/></a>
+                                    <div class="caption">
+                                        <h5>[[ value.product_name ]]</h5>
+                                        <p>
+                                            I'm a paragraph. Click here
+                                        </p>
+                                        <h4 style="text-align:center"><a class="btn" href="product_details.html">
+                                                <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to
+                                                <i class="icon-shopping-cart"></i></a>
+                                            <a class="btn btn-primary" href="#">$ [[value.price]]</a></h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <hr class="soft"/>
+                    </div>
+                </div>
+                <br class="clr"/>
 
                 <dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)"
                                          template-url="frontend/scripts/dirPagination.html">
