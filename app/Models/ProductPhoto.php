@@ -10,4 +10,9 @@ class ProductPhoto extends Model
     protected $dates = ['deleted_at'];
     protected $fillable = ['product_id','name', 'size','type','thumb_path','path','status'];
 
+    public function products()
+    {
+        return $this->belongsTo('App\Models\Product','product_id');
+    }
+
 }

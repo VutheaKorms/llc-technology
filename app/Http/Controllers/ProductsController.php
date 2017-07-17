@@ -51,7 +51,7 @@ class ProductsController extends Controller
     public function showPhoto($id)
     {
         $product_photo = DB::table('product_photos')
-            ->leftJoin('products','products.id','=','product_photos.product_id')
+//            ->leftJoin('products','products.id','=','product_photos.product_id')
             ->select('product_photos.product_id as product_id','product_photos.name as image')
             ->where('product_photos.product_id',$id)
             ->get();
@@ -83,6 +83,7 @@ class ProductsController extends Controller
 
         return response($id);
     }
+
 
     public function upload(Request $request)
     {

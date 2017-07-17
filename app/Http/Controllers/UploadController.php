@@ -16,11 +16,29 @@ class UploadController extends Controller
         $this->response = $response;
     }
 
+    public function index(Request $request) {
+        $input = $request->all();
+        if($request->get('search')){
+            $product_photos = ProductPhoto::with('products')->where("product_name", "LIKE", "%{$request->get('search')}%")
+                ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
+                ->paginate(6);
+        }else{
+            //$product_photos = ProductPhoto::paginate(5);
+            $product_photos = ProductPhoto::with('products')->paginate(6);
+        }
+        return response($product_photos);
+    }
+
+
     public function show($id)
     {
         $productPhoto = ProductPhoto::with('product')->find($id);
         return response($productPhoto);
     }
 
+    public function getImages($proId) {
+        $productPhoto = ProductPhoto::where('product_id','=', $proId)->get();
+        return response($productPhoto);
+    }
 
 }

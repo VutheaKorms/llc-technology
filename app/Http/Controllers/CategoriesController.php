@@ -16,8 +16,7 @@ class CategoriesController extends Controller
 
     public function getAllActive($status) {
         $categories = Category::where('status', $status)
-            ->orderBy('name', 'desc')
-            ->take(10)
+            ->orderBy('name', 'asc')
             ->get();
         return response($categories);
     }
