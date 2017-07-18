@@ -17,6 +17,8 @@ class CreateProductPhotosTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->string('name')->nullable();
             $table->string('size')->nullable();
             $table->string('type')->nullable();

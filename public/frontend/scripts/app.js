@@ -18,6 +18,7 @@
 angular
     .module('app', [
         'angularUtils.directives.dirPagination',
+        'angular.filter',
     ])
     .config(['$interpolateProvider',
         function ($interpolateProvider) {

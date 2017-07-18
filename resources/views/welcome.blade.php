@@ -29,9 +29,11 @@
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="frontend/scripts/app.js"></script>
     <script src="frontend/scripts/home.controller.js"></script>
+    <script src="frontend/scripts/unique.js"></script>
     <script src="backend/app/packages/dirPagination.js"></script>
     <script src="backend/app/services/myServices.js"></script>
     <script src="backend/app/helper/myHelper.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
 </head>
 <body ng-app="app" ng-controller="IdController">
 <div id="header">
@@ -58,7 +60,7 @@
                 </form>
                 <ul id="topMenu" class="nav pull-right">
                     {{--<li class=""><a href="special_offer.html">Specials Offer</a></li>--}}
-                    <li class=""><a href="normal.html">About</a></li>
+                    <li class=""><a href="about.html">About</a></li>
                     <li class=""><a href="contact.html">Contact</a></li>
                     <li class="">
                         <a href="/admin" role="button"  style="padding-right:0"><span class="btn btn-large btn-success">Login</span></a>
@@ -173,40 +175,48 @@
             <!-- Sidebar end=============================================== -->
             <div class="span9">
                 <div class="well well-small">
-                    <h4>Featured Products <small class="pull-right">200+ featured products</small></h4>
-                    <div class="row-fluid">
-                        <div id="featured" class="carousel slide">
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <ul class="thumbnails">
-                                        <li class="span3" dir-paginate="value in data | itemsPerPage:6 | limitTo:limit" total-items="totalItems">
-                                            <div class="thumbnail">
-                                                <i class="tag"></i>
-                                                <a href="product_details.html"><img src="frontend/themes/images/products/b1.jpg" alt=""></a>
-                                                <div class="caption">
-                                                    <h5>[[value.product_name]]</h5>
-                                                    <h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$[[value.price]]</span></h4>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                    <small>PRODUCTS</small>
+                    {{--<h4>Featured Products <small class="pull-right">200+ featured products</small></h4>--}}
+                    {{--<div class="row-fluid">--}}
+                        {{--<div id="featured" class="carousel slide">--}}
+                            {{--<div class="carousel-inner">--}}
+                                {{--<div class="item active">--}}
+                                    {{--<ul class="thumbnails">--}}
+                                        {{--<li class="span3" dir-paginate="value in data | itemsPerPage:6 | limitTo:limit" total-items="totalItems">--}}
+                                            {{--<div class="thumbnail">--}}
+                                                {{--<i class="tag"></i>--}}
+                                                {{--<a href="product_details.html"><img src="frontend/themes/images/products/b1.jpg" alt=""></a>--}}
+                                                {{--<div class="caption">--}}
+                                                    {{--<h5>[[value.product_name]]</h5>--}}
+                                                    {{--<h4><a class="btn" href="product_details.html">VIEW</a> <span class="pull-right">$[[value.price]]</span></h4>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</li>--}}
+                                    {{--</ul>--}}
+                                {{--</div>--}}
 
-                            </div>
-                            <a class="left carousel-control" href="#featured" data-slide="prev">‹</a>
-                            <a class="right carousel-control" href="#featured" data-slide="next">›</a>
-                        </div>
-                    </div>
+                            {{--</div>--}}
+                            {{--<a class="left carousel-control" href="#featured" data-slide="prev">‹</a>--}}
+                            {{--<a class="right carousel-control" href="#featured" data-slide="next">›</a>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                 </div>
-                <h4>Products </h4>
+
+                {{--<form class="form-inline">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<label >Search</label>--}}
+                        {{--<input type="text" ng-model="search" class="form-control" placeholder="Search">--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+
+                <br class="clr"/>
                 <form class="form-horizontal span6">
                     <div class="control-group">
                         <label class="control-label alignL">Sort By </label>
-                        <select>
-                            <option>Priduct name A - Z</option>
-                            <option>Priduct name Z - A</option>
-                            <option>Priduct Stoke</option>
-                            <option>Price Lowest first</option>
+                        <select ng-model="sortExpression">
+                            <option value="" selected="selected">Product name A - Z</option>
+                            <option value="price">Price $0 - Unlimited</option>
+                            <option value="category_id">Category name A - Z</option>
                         </select>
                     </div>
                 </form>
@@ -218,15 +228,14 @@
                 <br class="clr"/>
                 <div class="tab-content">
                     <div class="tab-pane" id="listView">
-                        <div class="row" dir-paginate="value in data | itemsPerPage:6 | filter:showcat" total-items="totalItems">
+                        <div class="row" dir-paginate="value in data | itemsPerPage:6 | filter:showcat | orderBy:mySortFunction" total-items="totalItems">
                             <div class="span2">
-                                {{--<img src="../../../../../[[value.name]]">--}}
-                                {{--<img src="frontend/themes/images/products/3.jpg" alt=""/>--}}
+                                <img src="../../../../../[[value.photo_name]]" height="142" width="142">
                             </div>
                             <div class="span4">
                                 <h3>New | Available</h3>
                                 <hr class="soft"/>
-                                <h5>[[ value.products.product_name ]]</h5>
+                                <h5>[[ value.product_name ]] | [[value.category_name]] </h5>
                                 <p>
                                     Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
                                     that is why our goods are so popular..
@@ -236,12 +245,12 @@
                             </div>
                             <div class="span3 alignR">
                                 <form class="form-horizontal qtyFrm">
-                                    <h3> $ [[value.products.price]]</h3>
-                                    <label class="checkbox">
-                                        <input type="checkbox">  Adds product to compair
-                                    </label><br/>
+                                    <h3> [[value.price | currency]]</h3>
+                                    {{--<label class="checkbox">--}}
+                                        {{--<input type="checkbox">  Adds product to compair--}}
+                                    {{--</label><br/>--}}
 
-                                    <a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>
+                                    {{--<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>--}}
                                     <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
 
                                 </form>
@@ -251,19 +260,20 @@
                     </div>
                     <div class="tab-pane  active" id="blockView">
                         <ul class="thumbnails">
-                            <li class="span3" dir-paginate="value in data | itemsPerPage:6 | filter:showcat" total-items="totalItems">
+                            <li class="span3" dir-paginate="value in data | itemsPerPage:6  | filter:showcat | orderBy:mySortFunction " total-items="totalItems">
                                 <div class="thumbnail">
+                                    <b style="color: #120293;"> &nbsp; [[value.category_name]]</b>
 
                                     <a href="product_details.html">
-
-                                        <img  alt="" src="../../../../../[[img.name]]" />
+                                        <img alt="" src="../../../../../[[value.photo_name]]" height="142" width="142"/>
                                     </a>
                                     <div class="caption">
                                         <h5>[[ value.product_name ]]</h5>
                                         <h4 style="text-align:center"><a class="btn" href="product_details.html">
-                                                <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to
-                                                <i class="icon-shopping-cart"></i></a>
-                                            <a class="btn btn-primary" href="#">$ [[value.price]]</a></h4>
+                                                <i class="icon-zoom-in"></i></a>
+                                            {{--<a class="btn" href="#">Add to--}}
+                                                {{--<i class="icon-shopping-cart"></i></a>--}}
+                                            <a class="btn btn-primary" href="#">[[value.price | currency]]</a></h4>
                                     </div>
                                 </div>
                             </li>

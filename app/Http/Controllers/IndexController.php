@@ -20,4 +20,15 @@ class IndexController extends Controller
 //
 //        return view('welcome', ['brands' => $brands, 'categories' => $categories]);
     }
+
+    public function contact()
+    {
+        return view('contact');
+    }
+
+    public function about()
+    {
+        return view('about');
+    }
+
 }

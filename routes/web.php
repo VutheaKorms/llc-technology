@@ -21,5 +21,8 @@ Auth::routes();
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::get('/products.html', 'ProductController@index')->name('product');
 Route::get('/','IndexController@index')->name('welcome');
+Route::get('/contact.html','IndexController@contact')->name('contact');
+Route::get('/about.html','IndexController@about')->name('about');
+Route::get('/product_details.html', 'ProductController@show')->name('product_details');
 
 

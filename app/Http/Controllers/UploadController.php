@@ -24,7 +24,7 @@ class UploadController extends Controller
                 ->paginate(6);
         }else{
             //$product_photos = ProductPhoto::paginate(5);
-            $product_photos = ProductPhoto::with('products')->paginate(6);
+            $product_photos = ProductPhoto::with('products','categories')->paginate(6);
         }
         return response($product_photos);
     }

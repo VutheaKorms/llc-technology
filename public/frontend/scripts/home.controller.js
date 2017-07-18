@@ -65,6 +65,7 @@ angular.module('app')
         $scope.totalItemsTemp = {};
         $scope.totalItems = 0;
 
+
         $scope.pageChanged = function(newPage) {
             getResultsPage(newPage);
         };
@@ -72,7 +73,6 @@ angular.module('app')
         function loadCategory(status) {
             dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
                 $scope.productCategory = data;
-                //console.log($scope.productCategory);
             });
         }
 
@@ -88,43 +88,20 @@ angular.module('app')
                     //console.log($scope.data);
                 });
             }else{
-                dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
+                    dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
                     $scope.data = data.data;
                     $scope.totalItems = data.total;
-                    $scope.images = [];
-                    //console.log($scope.data);
-                    //console.log("--------");
-                    for (var key in $scope.data) {
-
-                        var pro_id = $scope.data[key].id;
-                        //console.log(key);
-                        dataFactory.httpRequest('api/getImages/' + pro_id).then(function(data) {
-                            //$scope.images["'" + pro_id + "'"] = data[0];
-                            //$scope.images = data[0];
-                            //console.log($scope.images["'" + pro_id + "'"]);
-
-                            //$scope.totalItems = data.total;
-                            //console.log(allPro[key]);
-                            //$scope.data[key].id = "fdaf";///.images = data;
-                        });
-
-                    }
                 });
-
-
 
             }
         }
 
-        //function loadProductImages(pageNumber) {
-        //    dataFactory.httpRequest('api/images?page=' + pageNumber).then(function(data) {
-        //        $scope.productPhotos = data.data;
-        //        $scope.totalItems = data.total;
-        //        console.log($scope.productPhotos);
-        //    });
-        //}
-        //
-        //loadProductImages(1);
+        $scope.mySortFunction = function(value) {
+            if(isNaN(value[$scope.sortExpression]))
+                return value[$scope.sortExpression];
+            return parseInt(value[$scope.sortExpression]);
+        }
+
 
         $scope.searchDB = function(){
             if($scope.searchText.length >= 1){

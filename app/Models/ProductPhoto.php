@@ -8,11 +8,15 @@ class ProductPhoto extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['product_id','name', 'size','type','thumb_path','path','status'];
+    protected $fillable = ['product_id','name', 'size','type','thumb_path','path','status','category_id'];
 
     public function products()
     {
         return $this->belongsTo('App\Models\Product','product_id');
     }
 
+    public function categories()
+    {
+        return $this->belongsTo('App\Models\Category','category_id');
+    }
 }
