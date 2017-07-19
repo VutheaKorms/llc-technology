@@ -57,6 +57,10 @@ angular.module('app')
         return myService;
     })
 
+    .filter('encodeUri', function ($window) {
+        return $window.encodeURIComponent;
+    })
+
     .controller('IdController', function (dataFactory,$scope) {
 
         $scope.limit = 4;
@@ -82,15 +86,16 @@ angular.module('app')
 
         function getResultsPage(pageNumber) {
             if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/products?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
+                dataFactory.httpRequest('api/product?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
                     $scope.data = data.data;
                     $scope.totalItems = data.total;
                     //console.log($scope.data);
                 });
             }else{
-                    dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
+                    dataFactory.httpRequest('api/product?page='+pageNumber).then(function(data) {
                     $scope.data = data.data;
                     $scope.totalItems = data.total;
+                        console.log($scope.data);
                 });
 
             }

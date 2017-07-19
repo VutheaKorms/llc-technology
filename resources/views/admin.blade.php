@@ -36,7 +36,7 @@
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
 
-
+    <link rel="stylesheet" href="bower_components/angular/simditor.css" />
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="backend/app/styles/main.css">
     <link rel="stylesheet" href="backend/app/styles/sb-admin-2.css">
@@ -92,6 +92,10 @@
     <script src="backend/app/js/sb-admin-2.js"></script>
     <script src="backend/app/helper/myHelper.js"></script>
     <!-- endbuild -->
+
+    <script src="bower_components/angular/simditor-all.js"></script>
+    <script src="bower_components/angular/angular-editor.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-sanitize.min.js"></script>
 
     {{--<script>--}}
     {{--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){--}}

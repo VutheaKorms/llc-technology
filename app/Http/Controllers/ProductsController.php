@@ -17,51 +17,17 @@ class ProductsController extends Controller
         $this->response = $response;
     }
 
-
     public function index(Request $request)
     {
-        $products = DB::table('products')
-            ->select('products.description as description',
-                'products.price as price',
-                'products.status as status',
-                'products.created_at as created_at',
-                'products.product_name as product_name',
-                'products.product_code as product_code',
-                'products.created_at as created_at',
-                'product_photos.name as photo_name',
-                'product_photos.product_id as product_id',
-                'categories.id as category_id',
-                'categories.name as category_name')
-            ->join('categories','categories.id', '=' ,'products.category_id')
-            ->join('product_photos','products.id', '=' ,'product_photos.product_id')
-            ->groupBy('products.product_name')
-            ->distinct('product_photos.product_id')
-            ->where("products.product_name","LIKE", "%{$request->get('search')}%")
-            ->orWhere('products.created_at','LIKE',"%{$request->get('search')}%")
-            ->paginate(6);
-
+        $input = $request->all();
+        if($request->get('search')){
+            $products = Product::with('categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
+                ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
+                ->paginate(6);
+        }else{
+            $products = Product::with('categories')->paginate(6);
+        }
         return response($products);
-
-
-//        $input = $request->all();
-//        if($request->get('search')){
-//            $products = Product::with('categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
-//                ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
-//                ->paginate(6);
-//        }else{
-//            $products = Product::with('categories')->paginate(6);
-//        }
-//        return response($products);
-
-//        $input = $request->all();
-//        if($request->get('search')){
-//            $product_photos = ProductPhoto::with('products')->where("product_name", "LIKE", "%{$request->get('search')}%")
-//                ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
-//                ->paginate(6);
-//        }else{
-//            $product_photos = ProductPhoto::with('products','categories')->paginate(6);
-//        }
-//        return response($product_photos);
     }
 
     public function show($id) {
@@ -69,10 +35,13 @@ class ProductsController extends Controller
         $products = DB::table('products')
             ->select('products.description as description',
             'products.price as price',
+            'products.specification as specification',
             'products.status as status',
             'products.created_at as created_at',
             'products.product_name as product_name',
             'products.product_code as product_code',
+            'products.product_color as product_color',
+            'products.type as product_type',
             'categories.name as category_name')
             ->join('categories','categories.id', '=' ,'products.category_id')
             ->where('products.id', $id)
@@ -84,7 +53,6 @@ class ProductsController extends Controller
     public function showPhoto($id)
     {
         $product_photo = DB::table('product_photos')
-//            ->leftJoin('products','products.id','=','product_photos.product_id')
             ->select('product_photos.product_id as product_id','product_photos.name as image')
             ->where('product_photos.product_id',$id)
             ->get();
@@ -146,22 +114,22 @@ class ProductsController extends Controller
         return Product::where('id',$id)->delete();
     }
 
-    public function loadAllProductByCate($status,$cateId){
-        $products = DB::table('products')
-            ->select('products.id as product_id',
-                'products.product_name as product_name',
-                'products.product_code as product_code',
-                'products.status as product_status',
-                'categories.status as status',
-                'categories.id as category_id',
-                'categories.name as category_name')
-            ->join('categories','products.category_id', '=', 'categories.id')
-            ->where('products.status', $status, 'AND')
-            ->where('products.category_id', $cateId)
-            ->paginate(5);
-
-        return response($products);
-    }
+//    public function loadAllProductByCate($status,$cateId){
+//        $products = DB::table('products')
+//            ->select('products.id as product_id',
+//                'products.product_name as product_name',
+//                'products.product_code as product_code',
+//                'products.status as product_status',
+//                'categories.status as status',
+//                'categories.id as category_id',
+//                'categories.name as category_name')
+//            ->join('categories','products.category_id', '=', 'categories.id')
+//            ->where('products.status', $status, 'AND')
+//            ->where('products.category_id', $cateId)
+//            ->paginate(5);
+//
+//        return response($products);
+//    }
 
     public  function disable(Request $request, $id)
     {

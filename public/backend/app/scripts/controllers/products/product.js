@@ -41,8 +41,8 @@ angular.module('app')
                     return response.data;
                 },function(){
                     $.gritter.add({
-                        title: 'Application',
-                        text: 'An error occured while processing your request.'
+                        //title: 'Application',
+                        //text: 'An error occured while processing your request.'
                     });
                 });
                 return promise;
@@ -164,14 +164,14 @@ angular.module('app')
             window.history.back();
         };
 
-        function loadBrand(status) {
-            dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-                $scope.brands = data;
-                console.log($scope.brands);
-            });
-        }
-
-        loadBrand(1);
+        //function loadBrand(status) {
+        //    dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
+        //        $scope.brands = data;
+        //        console.log($scope.brands);
+        //    });
+        //}
+        //
+        //loadBrand(1);
 
         function loadCategory(status) {
             dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {

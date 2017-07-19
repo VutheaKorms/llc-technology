@@ -2,48 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Item;
+use Illuminate\Auth\Access\Response;
+use DB;
 
 class ItemController extends Controller
 {
+
+    public function __construct(Response $response)
+    {
+        $this->response = $response;
+    }
+
     public function index(Request $request)
     {
-        $input = $request->all();
-        if($request->get('search')){
-            $items = Item::where("name", "LIKE", "%{$request->get('search')}%")
-                ->paginate(5);
-        }else{
-            $items = Item::paginate(5);
-        }
-        return response($items);
+        $products = DB::table('products')
+            ->select('products.description as description',
+                'products.price as price',
+                'products.status as status',
+                'products.created_at as created_at',
+                'products.product_name as product_name',
+                'products.product_code as product_code',
+                'products.created_at as created_at',
+                'product_photos.name as photo_name',
+                'product_photos.product_id as product_id',
+                'products.type as product_type',
+                'categories.id as category_id',
+                'categories.name as category_name')
+            ->join('categories','categories.id', '=' ,'products.category_id')
+            ->join('product_photos','products.id', '=' ,'product_photos.product_id')
+            ->groupBy('products.product_name')
+            ->distinct('product_photos.product_id')
+            ->where("products.product_name","LIKE", "%{$request->get('search')}%")
+            ->orWhere('products.created_at','LIKE',"%{$request->get('search')}%")
+            ->paginate(6);
+
+        return response($products);
+
     }
     public function store(Request $request)
     {
-        $input = $request->all();
-        $create = Item::create($input);
-        return response($create);
+
     }
     public function edit($id)
     {
-        $item = Item::find($id);
-        return response($item);
+
     }
     public function update(Request $request,$id)
     {
-        $input = $request->all();
-        Item::where("id",$id)->update($input);
-        $item = Item::find($id);
-        return response($item);
+
     }
     public function destroy($id)
     {
-        return Item::where('id',$id)->delete();
+
     }
 
-    public function show($id)
+    public function show()
     {
-        $item = Item::find($id);
-        return response($item);
+        return view('product_details');
     }
 }

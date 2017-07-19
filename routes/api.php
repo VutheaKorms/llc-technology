@@ -31,9 +31,8 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('test/upload','ProductsController@upload');
-Route::resource('photo','UploadController');
 Route::get('product/review/{id}','ProductsController@showPhoto');
-Route::get('products/getAll/{status}/cate/{cateId}','ProductsController@loadAllProductByCate');
-Route::get('getImages/{proId}','UploadController@getImages');
-Route::resource('images','UploadController');
+Route::get('product','ItemController@index');
+
+
 

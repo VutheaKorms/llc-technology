@@ -18,7 +18,7 @@
 angular
     .module('app', [
         'angularUtils.directives.dirPagination',
-        'angular.filter',
+        'rt.encodeuri',
     ])
     .config(['$interpolateProvider',
         function ($interpolateProvider) {

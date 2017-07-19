@@ -25,17 +25,24 @@
                         <span><b>Color :</b></span><br /><br />
                         <span><b>Category Name :</b></span><br /><br />
                         <span><b>Description :</b></span><br /><br />
-                        <span><b>Date :</b></span><br /><br />
-                        <span><b>Status :</b></span><br /><br />
                         <span><b>Photos :</b></span><br /><br />
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <span ng-bind="products.product_name"></span><br /><br />
                         <span ng-bind="products.product_code"></span><br /><br />
                         <span>{{products.price | currency}}</span><br /><br />
-                        <span ng-bind="products.brand_name"></span><br /><br />
+                        <span ng-bind="products.product_color"></span><br /><br />
                         <span ng-bind="products.category_name"></span><br /><br />
                         <span ng-bind="products.description"></span><br /><br />
+                    </div>
+                    <div class="col-lg-2">
+                        <span><b>Type :</b></span><br /><br />
+                        <span><b>Date :</b></span><br /><br />
+                        <span><b>Status :</b></span><br /><br />
+                        <span><b>specification :</b></span><br /><br />
+                    </div>
+                    <div class="col-lg-4">
+                        <span ng-bind="products.product_type"></span><br /><br />
                         <span>
                             {{products.created_at | date:"MM/dd/yyyy"}}
                         </span><br /><br />
@@ -43,6 +50,7 @@
                             <p ng-if="products.status == 1"><span class="label label-info">Active</span></p>
                             <p ng-if="products.status == 0"><span class="label label-default">Disable</span></p>
                         </span>
+                        <span ng-bind-html="products.specification"></span><br /><br />
 
                     </div>
                     <div class="row">

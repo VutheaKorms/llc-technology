@@ -10,9 +10,4 @@ class ProductController extends Controller
     {
         return view('product');
     }
-
-    public function show()
-    {
-        return view('product_details');
-    }
 }

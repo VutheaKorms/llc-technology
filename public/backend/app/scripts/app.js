@@ -10,6 +10,8 @@ angular
     'ui-notification',
     'angularUtils.directives.dirPagination',
     'angularFileUpload',
+    'simditor',
+    'ngSanitize',
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider' ,'$locationProvider', 'NotificationProvider',
       function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$locationProvider, NotificationProvider) {

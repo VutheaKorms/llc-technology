@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
 //            $table->string('product_color', 50)->nullable();
 //            $table->string('description', 255)->nullable();
 //            $table->float('price')->default(0);
+//            $table->string('type', 50)->nullable();
 //            $table->integer('category_id')->unsigned()->index();
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();

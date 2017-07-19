@@ -41,8 +41,8 @@ angular.module('app')
                     return response.data;
                 },function(){
                     $.gritter.add({
-                        title: 'Application',
-                        text: 'An error occured while processing your request.'
+                        //title: 'Application',
+                        //text: 'An error occured while processing your request.'
                     });
                 });
                 return promise;
@@ -61,6 +61,12 @@ angular.module('app')
         $scope.brands = [];
         $scope.selectedCategory = null;
         $scope.productCategory = [];
+
+        $scope.selectedColor = "Black";
+        $scope.colors = [];
+        $scope.selectedType = "New";
+        $scope.types = [];
+        $scope.editor = '';
 
 
         $scope.pageChanged = function(newPage) {
@@ -108,12 +114,15 @@ angular.module('app')
             price: $scope.price,
             brand_id: $scope.selectedBrand,
             category_id: $scope.selectedCategory,
-            description: $scope.description
+            description: $scope.description,
+            specification: $scope.specification
         }
 
         $scope.saveAdd = function(){
-            $scope.form.brand_id = $scope.selectedBrand;
+            //$scope.form.brand_id = $scope.selectedBrand;
             $scope.form.category_id= $scope.selectedCategory;
+            $scope.form.type= $scope.selectedType;
+            $scope.form.product_color = $scope.selectedColor;
             dataFactory.httpRequest('api/products','POST',{},$scope.form).then(function(data) {
                 $scope.data = data;
                 console.log(data);
@@ -170,14 +179,14 @@ angular.module('app')
             window.history.back();
         };
 
-        function loadBrand(status) {
-            dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-                $scope.brands = data;
-                console.log($scope.brands);
-            });
-        }
-
-        loadBrand(1);
+        //function loadBrand(status) {
+        //    dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
+        //        $scope.brands = data;
+        //        console.log($scope.brands);
+        //    });
+        //}
+        //
+        //loadBrand(1);
 
         function loadCategory(status) {
             dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
@@ -193,7 +202,7 @@ angular.module('app')
             $scope.form.product_name= "";
             $scope.form.product_code="";
             $scope.form.price= "";
-            $scope.selectedBrand = null;
+            //$scope.selectedBrand = null;
             $scope.selectedCategory = null;
         }
 
@@ -208,5 +217,29 @@ angular.module('app')
                 getResultsPage(1);
             });
         }
+
+
+        $scope.types = [
+            { "id" : "New","name" : "New"},
+            { "id" : "Used","name" : "Used"},
+        ];
+
+        $scope.colors = [
+            { "id" : "Black","name" : "Black"},
+            { "id" : "Blue","name" : "Blue"},
+            { "id" : "Orange","name" : "Orange"},
+            { "id" : "Red","name" : "Red"},
+            { "id" : "White","name" : "White"},
+            { "id" : "Silver","name" : "Silver"},
+            { "id" : "Brown","name" : "Brown"},
+            { "id" : "Green","name" : "Green"},
+            { "id" : "Yellow","name" : "Yellow"},
+            { "id" : "Lime","name" : "Lime"},
+            { "id" : "Purple","name" : "Purple"},
+            { "id" : "Olive","name" : "Olive"},
+            { "id" : "Cyan","name" : "Cyan"},
+            { "id" : "Maroon","name" : "Maroon"},
+            { "id" : "DarkBlue","name" : "DarkBlue"},
+        ];
 
     });

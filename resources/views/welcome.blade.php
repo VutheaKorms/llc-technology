@@ -33,7 +33,9 @@
     <script src="backend/app/packages/dirPagination.js"></script>
     <script src="backend/app/services/myServices.js"></script>
     <script src="backend/app/helper/myHelper.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
+
+    <script src="bower_components/angular-encode-uri/dist/angular-encode-uri.min.js"></script>
+
 </head>
 <body ng-app="app" ng-controller="IdController">
 <div id="header">
@@ -233,16 +235,18 @@
                                 <img src="../../../../../[[value.photo_name]]" height="142" width="142">
                             </div>
                             <div class="span4">
-                                <h3>New | Available</h3>
+                                <h3>[[value.product_type]] | <span ng-if="value.status == 1">Available</span><span ng-if="value.status == 0">Not Available</span> </h3>
                                 <hr class="soft"/>
                                 <h5>[[ value.product_name ]] | [[value.category_name]] </h5>
                                 <p>
                                     Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
                                     that is why our goods are so popular..
                                 </p>
-                                <a class="btn btn-small pull-right" href="product_details.html">View Details</a>
+                                <a href="#/search?query=[[product|encodeUri]]">ddd</a>
+                                {{--<a class="btn btn-small pull-right" href="product/[[value.product_id]]">View Details</a>--}}
                                 <br class="clr"/>
                             </div>
+
                             <div class="span3 alignR">
                                 <form class="form-horizontal qtyFrm">
                                     <h3> [[value.price | currency]]</h3>
@@ -262,6 +266,7 @@
                         <ul class="thumbnails">
                             <li class="span3" dir-paginate="value in data | itemsPerPage:6  | filter:showcat | orderBy:mySortFunction " total-items="totalItems">
                                 <div class="thumbnail">
+                                    <span ng-if="value.product_type == 'New'"><i class="tag"></i></span>
                                     <b style="color: #120293;"> &nbsp; [[value.category_name]]</b>
 
                                     <a href="product_details.html">
