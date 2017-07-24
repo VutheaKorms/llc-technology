@@ -242,8 +242,7 @@
                                     Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
                                     that is why our goods are so popular..
                                 </p>
-                                <a href="#/search?query=[[product|encodeUri]]">ddd</a>
-                                {{--<a class="btn btn-small pull-right" href="product/[[value.product_id]]">View Details</a>--}}
+                                <a class="btn btn-small pull-right" href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">View Details</a>
                                 <br class="clr"/>
                             </div>
 
@@ -255,7 +254,7 @@
                                     {{--</label><br/>--}}
 
                                     {{--<a href="product_details.html" class="btn btn-large btn-primary"> Add to <i class=" icon-shopping-cart"></i></a>--}}
-                                    <a href="product_details.html" class="btn btn-large"><i class="icon-zoom-in"></i></a>
+                                    <a href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]" class="btn btn-large"><i class="icon-zoom-in"></i></a>
 
                                 </form>
                             </div>
@@ -269,16 +268,16 @@
                                     <span ng-if="value.product_type == 'New'"><i class="tag"></i></span>
                                     <b style="color: #120293;"> &nbsp; [[value.category_name]]</b>
 
-                                    <a href="product_details.html">
+                                    <a href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">
                                         <img alt="" src="../../../../../[[value.photo_name]]" height="142" width="142"/>
                                     </a>
                                     <div class="caption">
                                         <h5>[[ value.product_name ]]</h5>
-                                        <h4 style="text-align:center"><a class="btn" href="product_details.html">
+                                        <h4 style="text-align:center"><a class="btn" href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">
                                                 <i class="icon-zoom-in"></i></a>
                                             {{--<a class="btn" href="#">Add to--}}
                                                 {{--<i class="icon-shopping-cart"></i></a>--}}
-                                            <a class="btn btn-primary" href="#">[[value.price | currency]]</a></h4>
+                                            <a class="btn btn-primary" href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">[[value.price | currency]]</a></h4>
                                     </div>
                                 </div>
                             </li>

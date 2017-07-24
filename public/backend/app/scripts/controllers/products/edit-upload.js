@@ -1,16 +1,17 @@
 
-
 'use strict';
 
 angular.module('app')
 
-    .controller('ProductUploadCtrl', ['$scope', 'FileUploader','$state','Notification', function($scope, FileUploader, $state, Notification, $stateParams) {
+    .controller('ProductEditUploadCtrl', ['$scope', 'FileUploader','$state','Notification','$stateParams','$http', function($scope, FileUploader, $state, Notification, $stateParams,$http) {
+
+       // $scope.id = $stateParams.id;
         var uploader = $scope.uploader = new FileUploader({
-            url: 'api/test/upload'
+            url: 'api/test/upload/' + $stateParams.id
         });
 
 
-        $scope.id = $stateParams.id;
+        var API_URL_PHOTO = 'api/product/review/';
 
         uploader.filters.push({
             name: 'imageFilter',
@@ -33,6 +34,19 @@ angular.module('app')
             window.history.back();
         };
 
+        function loadDataPhoto() {
+            $http({
+                method: 'GET',
+                url: API_URL_PHOTO + $stateParams.id,
+            }).then(function (success){
+                $scope.photos = success.data;
+                console.log($scope.photos);
+            },function (error){
+                console.log(error, " can't get data.");
+            });
+        }
+
+        loadDataPhoto();
 
         // CALLBACKS
 

@@ -75,6 +75,37 @@ class ProductsController extends Controller
         return response($item);
     }
 
+    public function editUpload(Request $request, $id)
+    {
+        //$product_id = $request->session()->get('product_id');
+        //$category_id = $request->session()->get('category_id');
+
+        $tempPath = $_FILES['file']['tmp_name'];
+        $uploadPath = 'uploads/' . $_FILES['file']['name'];
+        $size = $_FILES['file']['size'];
+        $type = $_FILES['file']['type'];
+
+        move_uploaded_file($tempPath, $uploadPath);
+
+        $input = ProductPhoto::find($id);
+        $input->product_id = $request->input('product_id');
+        $input->category_id = $request->input('category_id');
+        $input->name = "$uploadPath";
+        $input->size = "$size";
+        $input->type = "$type";
+        $input->save();
+        return response($input);
+
+//        $upload = ProductPhoto::find($id);
+//        $upload->product_id = $product_id;
+//        $upload->category_id = $category_id;
+//        $upload->name = "$uploadPath";
+//        $upload->size = "$size";
+//        $upload->type = "$type";
+//
+//        $upload->save();
+    }
+
     public function store(Request $request)
     {
         $input = $request->all();
@@ -114,23 +145,6 @@ class ProductsController extends Controller
         return Product::where('id',$id)->delete();
     }
 
-//    public function loadAllProductByCate($status,$cateId){
-//        $products = DB::table('products')
-//            ->select('products.id as product_id',
-//                'products.product_name as product_name',
-//                'products.product_code as product_code',
-//                'products.status as product_status',
-//                'categories.status as status',
-//                'categories.id as category_id',
-//                'categories.name as category_name')
-//            ->join('categories','products.category_id', '=', 'categories.id')
-//            ->where('products.status', $status, 'AND')
-//            ->where('products.category_id', $cateId)
-//            ->paginate(5);
-//
-//        return response($products);
-//    }
-
     public  function disable(Request $request, $id)
     {
         try {
@@ -144,7 +158,5 @@ class ProductsController extends Controller
                 //Show error page
         }
     }
-
-
 
 }

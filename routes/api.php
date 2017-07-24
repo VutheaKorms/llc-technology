@@ -31,8 +31,12 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('test/upload','ProductsController@upload');
+Route::post('test/upload/{id}','ProductsController@editUpload');
 Route::get('product/review/{id}','ProductsController@showPhoto');
 Route::get('product','ItemController@index');
+//Route::get('product/{id}','ItemController@show');
+//Route::get('product/photo/{id}','ItemController@showPhoto');
+
 
 
 

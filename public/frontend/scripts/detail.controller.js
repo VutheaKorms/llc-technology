@@ -61,8 +61,7 @@ angular.module('app')
         return window.encodeURIComponent;
     })
 
-    .controller('IdController', function (dataFactory,$scope) {
-
+    .controller('IdDetailController', function (dataFactory,$scope) {
         $scope.limit = 4;
         $scope.data = [];
         $scope.libraryTemp = {};
@@ -75,7 +74,7 @@ angular.module('app')
         };
 
         function loadCategory(status) {
-            dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
+            dataFactory.httpRequest('/api/categories/status/' + status).then(function(data) {
                 $scope.productCategory = data;
             });
         }
@@ -86,16 +85,16 @@ angular.module('app')
 
         function getResultsPage(pageNumber) {
             if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/product?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
+                dataFactory.httpRequest('/api/product?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
                     $scope.data = data.data;
                     $scope.totalItems = data.total;
                     //console.log($scope.data);
                 });
             }else{
-                    dataFactory.httpRequest('api/product?page='+pageNumber).then(function(data) {
+                dataFactory.httpRequest('/api/product?page='+pageNumber).then(function(data) {
                     $scope.data = data.data;
                     $scope.totalItems = data.total;
-                        console.log($scope.data);
+                    //console.log($scope.data);
                 });
 
             }

@@ -1,0 +1,87 @@
+<div ng-controller="ProductEditCtrl">
+    <div class="row">
+        <div class="col-lg-11">
+            <h1 class="page-header">Product Management</h1>
+        </div>
+        <div class="col-lg-1">
+            <h1 class="page-header"><button type="button" class="btn btn-default" ng-click="goBack();">Back</button></h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div>
+
+        <form method="POST" name="addItem" role="form" ng-submit="saveEdit()">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Name : </strong>
+                    <div class="form-group">
+                        <input ng-model="form.product_name" type="text" placeholder="Name" name="name" class="form-control" required />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Code : </strong>
+                    <div class="form-group">
+                        <input ng-model="form.product_code" type="text" placeholder="Code" name="code" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Color : </strong>
+                    <div class="form-group">
+                        <select ng-model="selectedColor" class="form-control" ng-selected= "{{item.id == selectedColor}}"
+                                ng-options="item.id as item.name for item in colors">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Price : </strong>
+                    <div class="form-group input-group">
+                        <span class="input-group-addon">$</span>
+                        <input ng-model="form.price" type="text" placeholder="Price" name="price" class="form-control" required />
+                        <span class="input-group-addon">.00</span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Category : </strong>
+                    <div class="form-group">
+                        <select ng-model="selectedCategory" class="form-control" required
+                                ng-options="item.id as item.name for item in productCategory">
+                            <option value="">Select</option>
+                        </select>
+                        <!--<input ng-model="form.pro_cate_id" type="text" placeholder="ProductType" name="title" class="form-control" required />-->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Type : </strong>
+                    <div class="form-group">
+                        <select ng-model="selectedType" class="form-control" ng-selected= "{{item.id == selectedType}}"
+                                ng-options="item.id as item.name for item in types">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong> Specification : </strong>
+                    <div simditor ng-model="form.specification" placeholder="some placeholder"></div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <strong>Description : </strong>
+                    <div class="form-group" >
+                            <textarea ng-model="form.description" rows="6" class="form-control">
+                            </textarea>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Save</button>
+
+        </form>
+
+    </div>
+
+
+
+</div>

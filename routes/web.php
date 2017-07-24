@@ -23,7 +23,7 @@ Route::get('/products.html', 'ProductController@index')->name('product');
 Route::get('/','IndexController@index')->name('welcome');
 Route::get('/contact.html','IndexController@contact')->name('contact');
 Route::get('/about.html','IndexController@about')->name('about');
-//Route::get('/product/{id}', 'ItemController@show')->name('product_details');
-Route::get('/product', 'ItemController@show')->name('product_details');
+Route::get('/product_detail.html/{id}', 'ItemController@detail')->name('product_details');
+
 
 

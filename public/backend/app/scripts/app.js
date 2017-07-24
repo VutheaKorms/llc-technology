@@ -220,21 +220,37 @@ angular
         }
     })
 
-    //.state('dashboard.product-review',{
-    //    url:'/product/review',
-    //    controller: 'ProductReviewCtrl',
-    //    templateUrl:'backend/app/views/products/review-product.html',
-    //    resolve: {
-    //        loadMyFiles:function($ocLazyLoad) {
-    //            return $ocLazyLoad.load({
-    //                name:'app',
-    //                files:[
-    //                    'backend/app/scripts/controllers/products/review.js'
-    //                ]
-    //            })
-    //        }
-    //    }
-    //})
+    .state('dashboard.product-edit',{
+        url:'/product/edit/:id',
+        controller: 'ProductEditCtrl',
+        templateUrl:'backend/app/views/products/edit.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/products/edit.js'
+                    ]
+                })
+            }
+        }
+    })
+
+    .state('dashboard.product-edit-upload',{
+        url:'/product/upload/:id',
+        controller: 'ProductEditUploadCtrl',
+        templateUrl:'backend/app/views/products/edit-upload-photo.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/products/edit-upload.js'
+                    ]
+                })
+            }
+        }
+    })
 
     .state('dashboard.product-view',{
         url:'/product/view/:id',
