@@ -25,6 +25,7 @@ class ItemController extends Controller
                 'products.product_name as product_name',
                 'products.product_code as product_code',
                 'products.created_at as created_at',
+                'product_photos.deleted_at as deleted_at',
                 'product_photos.name as photo_name',
                 'product_photos.product_id as product_id',
                 'products.type as product_type',
@@ -58,37 +59,6 @@ class ItemController extends Controller
 
     }
 
-
-
-//    public function show($id) {
-//
-//        $products = DB::table('products')
-//            ->select('products.description as description',
-//                'products.price as price',
-//                'products.specification as specification',
-//                'products.status as status',
-//                'products.created_at as created_at',
-//                'products.product_name as product_name',
-//                'products.product_code as product_code',
-//                'products.product_color as product_color',
-//                'products.type as product_type',
-//                'categories.name as category_name')
-//            ->join('categories','categories.id', '=' ,'products.category_id')
-//            ->where('products.id', $id)
-//            ->get();
-//
-//        return response($products);
-//    }
-//
-//    public function showPhoto($id)
-//    {
-//        $product_photo = DB::table('product_photos')
-//            ->select('product_photos.product_id as product_id','product_photos.name as image')
-//            ->where('product_photos.product_id',$id)
-//            ->get();
-//
-//        return response($product_photo);
-//    }
 
     public function detail($id) {
 

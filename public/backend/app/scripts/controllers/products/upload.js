@@ -4,13 +4,11 @@
 
 angular.module('app')
 
-    .controller('ProductUploadCtrl', ['$scope', 'FileUploader','$state','Notification', function($scope, FileUploader, $state, Notification, $stateParams) {
+    .controller('ProductUploadCtrl', ['$scope', 'FileUploader','$state','Notification', function($scope, FileUploader, $state, Notification) {
         var uploader = $scope.uploader = new FileUploader({
             url: 'api/test/upload'
         });
 
-
-        $scope.id = $stateParams.id;
 
         uploader.filters.push({
             name: 'imageFilter',

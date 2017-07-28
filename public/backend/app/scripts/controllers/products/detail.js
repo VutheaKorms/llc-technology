@@ -4,7 +4,6 @@ angular.module('app')
     .controller('ProductDetailCtrl', function($scope, $http, $state, $stateParams, Notification) {
         $scope.id = $stateParams.id;
         var API_URL = 'api/products/';
-        var API_URL_PHOTO = 'api/product/review/';
 
         function loadData() {
             $http({
@@ -23,7 +22,7 @@ angular.module('app')
         function loadDataPhoto() {
             $http({
                 method: 'GET',
-                url: API_URL_PHOTO + $scope.id,
+                url: 'api/product/review/' + $scope.id
             }).then(function (success){
                 $scope.photos = success.data;
                 console.log($scope.photos);

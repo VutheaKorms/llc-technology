@@ -53,11 +53,21 @@ class ProductsController extends Controller
     public function showPhoto($id)
     {
         $product_photo = DB::table('product_photos')
-            ->select('product_photos.product_id as product_id','product_photos.name as image')
+            ->select('product_photos.product_id as product_id','product_photos.name as image', 'product_photos.id as id',
+            'product_photos.deleted_at as deleted_at', 'product_photos.status as status',
+            'product_photos.size as photo_size','product_photos.type as photo_type','products.product_name as product_name')
+            ->join('products','products.id', '=' ,'product_photos.product_id')
             ->where('product_photos.product_id',$id)
+            ->orderBy('product_photos.deleted_at')
             ->get();
 
         return response($product_photo);
+    }
+
+    public function editPhoto($id)
+    {
+        $item = ProductPhoto::find($id);
+        return response($item);
     }
 
     public function edit($id)
@@ -72,13 +82,15 @@ class ProductsController extends Controller
         $input = $request->all();
         Product::where("id",$id)->update($input);
         $item = Product::find($id);
+        Session::put('product_id', $item->id);
+        Session::put('category_id', $item->category_id);
         return response($item);
     }
 
-    public function editUpload(Request $request, $id)
+    public function editUpload(Request $request)
     {
-        //$product_id = $request->session()->get('product_id');
-        //$category_id = $request->session()->get('category_id');
+        $product_id = $request->session()->get('product_id');
+        $category_id = $request->session()->get('category_id');
 
         $tempPath = $_FILES['file']['tmp_name'];
         $uploadPath = 'uploads/' . $_FILES['file']['name'];
@@ -87,23 +99,14 @@ class ProductsController extends Controller
 
         move_uploaded_file($tempPath, $uploadPath);
 
-        $input = ProductPhoto::find($id);
-        $input->product_id = $request->input('product_id');
-        $input->category_id = $request->input('category_id');
-        $input->name = "$uploadPath";
-        $input->size = "$size";
-        $input->type = "$type";
-        $input->save();
-        return response($input);
+        $upload = new ProductPhoto();
+        $upload->product_id = $product_id;
+        $upload->category_id = $category_id;
+        $upload->name = "$uploadPath";
+        $upload->size = "$size";
+        $upload->type = "$type";
 
-//        $upload = ProductPhoto::find($id);
-//        $upload->product_id = $product_id;
-//        $upload->category_id = $category_id;
-//        $upload->name = "$uploadPath";
-//        $upload->size = "$size";
-//        $upload->type = "$type";
-//
-//        $upload->save();
+        $upload->save();
     }
 
     public function store(Request $request)
@@ -143,6 +146,13 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         return Product::where('id',$id)->delete();
+    }
+
+
+    public  function destroyPhoto($id)
+    {
+        $product_photo = DB::delete('delete from product_photos where id = ?',[$id]);
+        return response($product_photo);
     }
 
     public  function disable(Request $request, $id)

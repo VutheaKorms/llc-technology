@@ -17,31 +17,56 @@
                 <a ui-sref="dashboard.product"><i class="fa fa-shopping-cart"></i> Products</a>
             </li>
 
-            <li ng-class="{active: collapseVar==1}">{{dropDown}}
-                <a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> Settings<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar==0">
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.panels-wells">Panels and Wells</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.buttons">Buttons</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.notifications">Notifications</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.typography">Typography</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.icons"> Icons</a>
-                    </li>
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.grid">Grid</a>
-                    </li>
-                </ul>
-                <!-- /.nav-second-level -->
+            <li>
+                <a href="" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa fa-wrench fa-fw"></i> Settings<span
+                        class="fa arrow"></span>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a ui-sref="dashboard.setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li>
+                            <a ui-sref="dashboard.profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li>
+                            <a ui-sref="dashboard.cover"><i class="fa fa-gear fa-fw"></i> Change Slide</a>
+                        </li>
+                        <li>
+                            <a ui-sref="dashboard.language"><i class="fa fa-gear fa-fw"></i> Language</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
+
+
+            <!--&lt;!&ndash;<li ng-class="{active: collapseVar==1}">{{dropDown}}&ndash;&gt;-->
+                <!--&lt;!&ndash;<a href="" ng-click="check(1)"><i class="fa fa-wrench fa-fw"></i> Settings<span&ndash;&gt;-->
+                        <!--&lt;!&ndash;class="fa arrow"></span></a>&ndash;&gt;-->
+                <!--<ul class="nav nav-second-level" collapse="collapseVar==0">-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.panels-wells">Panels and Wells</a>-->
+                    <!--</li>-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.buttons">Buttons</a>-->
+                    <!--</li>-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.notifications">Notifications</a>-->
+                    <!--</li>-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.typography">Typography</a>-->
+                    <!--</li>-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.icons"> Icons</a>-->
+                    <!--</li>-->
+                    <!--<li ui-sref-active="active">-->
+                        <!--<a ui-sref="dashboard.grid">Grid</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
+            <!--</li>-->
             <!--<li ng-class="{active: collapseVar==2}">-->
                 <!--<a href="" ng-click="check(2)"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span-->
                         <!--class="fa arrow"></span></a>-->

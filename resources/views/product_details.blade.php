@@ -192,7 +192,7 @@
                                     <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">{{ $object->category_name }}</td></tr>
                                     <tr class="techSpecRow"><td class="techSpecTD1">Model:</td><td class="techSpecTD2">{{ $object->product_name }}</td></tr>
                                     <tr class="techSpecRow"><td class="techSpecTD1">Released on:</td><td class="techSpecTD2">{{ $object->created_at }}</td></tr>
-                                    <tr class="techSpecRow"><td class="techSpecTD1">Specification:</td><td class="techSpecTD2">{{ $object->specification }}</td></tr>
+                                    <tr class="techSpecRow"><td class="techSpecTD1">Specification:</td><td class="techSpecTD2">{!! $object->specification !!}</td></tr>
                                     </tbody>
                                 </table>
 

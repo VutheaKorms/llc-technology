@@ -66,6 +66,11 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr ng-if="data == null || data.length <= 0">
+                                <td colspan="6" class="bold text-center">
+                                   No Category Found
+                                </td>
+                            </tr>
                             <tr class="odd gradeX" dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{value.name}}</td>

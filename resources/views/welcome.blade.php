@@ -76,62 +76,63 @@
 <div id="carouselBlk">
     <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
-            {{--<div class="item active">--}}
+            <div class="item" ng-repeat="img in slider">
+                <div class="container">
+                    <a href="">
+                        <img  style="width:100%" src="/../[[img.name]]" alt="special offers"/></a>
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
+                </div>
+            </div>
+            {{--<div class="item">--}}
                 {{--<div class="container">--}}
-                    {{--<a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/1.png" alt="special offers"/></a>--}}
+                    {{--<a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/2.png" alt=""/></a>--}}
                     {{--<div class="carousel-caption">--}}
                         {{--<h4>Second Thumbnail label</h4>--}}
                         {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
                     {{--</div>--}}
                 {{--</div>--}}
             {{--</div>--}}
-            <div class="item active">
-                <div class="container">
-                    <a href="register.html"><img style="width:100%" src="frontend/themes/images/carousel/2.png" alt=""/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="container">
-                    <a href="register.html"><img src="frontend/themes/images/carousel/3.png" alt=""/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
+            {{--<div class="item">--}}
+                {{--<div class="container">--}}
+                    {{--<a href="register.html"><img src="frontend/themes/images/carousel/3.png" alt=""/></a>--}}
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
 
-                </div>
-            </div>
-            <div class="item">
-                <div class="container">
-                    <a href="register.html"><img src="frontend/themes/images/carousel/4.png" alt=""/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="item">--}}
+                {{--<div class="container">--}}
+                    {{--<a href="register.html"><img src="frontend/themes/images/carousel/4.png" alt=""/></a>--}}
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
 
-                </div>
-            </div>
-            <div class="item">
-                <div class="container">
-                    <a href="register.html"><img src="frontend/themes/images/carousel/5.png" alt=""/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="container">
-                    <a href="register.html"><img src="frontend/themes/images/carousel/6.png" alt=""/></a>
-                    <div class="carousel-caption">
-                        <h4>Second Thumbnail label</h4>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                    </div>
-                </div>
-            </div>
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="item">--}}
+                {{--<div class="container">--}}
+                    {{--<a href="register.html"><img src="frontend/themes/images/carousel/5.png" alt=""/></a>--}}
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--<div class="item">--}}
+                {{--<div class="container">--}}
+                    {{--<a href="register.html"><img src="frontend/themes/images/carousel/6.png" alt=""/></a>--}}
+                    {{--<div class="carousel-caption">--}}
+                        {{--<h4>Second Thumbnail label</h4>--}}
+                        {{--<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
         </div>
         <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
@@ -239,8 +240,7 @@
                                 <hr class="soft"/>
                                 <h5>[[ value.product_name ]] | [[value.category_name]] </h5>
                                 <p>
-                                    Nowadays the lingerie industry is one of the most successful business spheres.We always stay in touch with the latest fashion tendencies -
-                                    that is why our goods are so popular..
+                                   [[value.description]]
                                 </p>
                                 <a class="btn btn-small pull-right" href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">View Details</a>
                                 <br class="clr"/>
@@ -269,7 +269,7 @@
                                     <b style="color: #120293;"> &nbsp; [[value.category_name]]</b>
 
                                     <a href="/product_detail.html/[[ value.product_id]][[ 'bar&baz'  | encodeURIComponent ]]">
-                                        <img alt="" src="../../../../../[[value.photo_name]]" height="142" width="142"/>
+                                        <img alt="" src="../../../../../[[value.photo_name]]" height="160" width="160"/>
                                     </a>
                                     <div class="caption">
                                         <h5>[[ value.product_name ]]</h5>

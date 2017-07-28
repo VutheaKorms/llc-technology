@@ -72,6 +72,11 @@
                             </tr>
                             </thead>
                             <tbody>
+                            <tr ng-if="data == null || data.length <= 0">
+                                <td colspan="9" class="bold text-center">
+                                    No Product Photo
+                                </td>
+                            </tr>
                             <tr class="odd gradeX" dir-paginate="value in data | itemsPerPage:6" total-items="totalItems">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{value.product_name}}</td>

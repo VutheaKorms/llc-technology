@@ -31,11 +31,16 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::post('test/upload','ProductsController@upload');
-Route::post('test/upload/{id}','ProductsController@editUpload');
+Route::post('test/editUpload','ProductsController@editUpload');
 Route::get('product/review/{id}','ProductsController@showPhoto');
 Route::get('product','ItemController@index');
-//Route::get('product/{id}','ItemController@show');
-//Route::get('product/photo/{id}','ItemController@showPhoto');
+Route::delete('photo/delete/{id}','ProductsController@destroyPhoto');
+Route::get('photo/{id}','ProductsController@editPhoto');
+Route::post('cover/upload','UploadController@upload');
+Route::get('cover','UploadController@index');
+Route::delete('cover/{id}','UploadController@destroyPhoto');
+Route::get('cover/{id}','UploadController@editPhoto');
+
 
 
 

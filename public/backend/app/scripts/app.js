@@ -33,7 +33,7 @@ angular
       events:true,
     });
 
-    $urlRouterProvider.otherwise('/dashboard');
+    $urlRouterProvider.otherwise('/dashboard/home');
 
     $stateProvider
       .state('dashboard', {
@@ -98,7 +98,7 @@ angular
               files:[
               'backend/app/scripts/controllers/main.js',
               'backend/app/scripts/directives/timeline/timeline.js',
-              'backend/app/scripts/directives/notifications/notifications.js',
+              //'backend/app/scripts/directives/notifications/notifications.js',
               'backend/app/scripts/directives/chat/chat.js',
               'backend/app/scripts/directives/dashboard/stats/stats.js'
               ]
@@ -295,6 +295,38 @@ angular
                     name:'app',
                     files:[
                         'backend/app/scripts/controllers/profiles/setting.js'
+                    ]
+                })
+            }
+        }
+    })
+
+    .state('dashboard.cover',{
+        url:'/cover',
+        controller: 'CoverCtrl',
+        templateUrl:'backend/app/views/profiles/cover.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/profiles/cover.js'
+                    ]
+                })
+            }
+        }
+    })
+
+    .state('dashboard.language',{
+        url:'/language',
+        controller: 'LanguageCtrl',
+        templateUrl:'backend/app/views/profiles/language.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/profiles/language.js'
                     ]
                 })
             }

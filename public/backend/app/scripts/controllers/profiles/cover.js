@@ -52,10 +52,10 @@ angular.module('app')
         };
         return myService;
     })
-    .controller('ProductEditUploadCtrl', function(dataFactory,FileUploader,$scope, $state, Notification, $stateParams) {
+    .controller('CoverCtrl', function(dataFactory,FileUploader,$scope, $state, Notification) {
 
         var uploader = $scope.uploader = new FileUploader({
-            url: 'api/test/editUpload'
+            url: 'api/cover/upload'
         });
 
         uploader.filters.push({
@@ -71,48 +71,41 @@ angular.module('app')
         };
 
         function goToBack() {
-            $state.go('dashboard.product');
+            window.history.back();
         }
 
         $scope.back = function () {
             goToBack();
         }
 
-        $scope.goBack = function() {
-            window.history.back();
-        };
-
         uploader.onCompleteAll = function() {
-            //console.info('onCompleteAll');
             Notification.success('Successfully saved');
-            //goToBack();
-            loadPhotos();
+            loadCovers();
         };
 
         $scope.edit = function(id){
-            dataFactory.httpRequest('api/photo/'+id).then(function(data) {
+            dataFactory.httpRequest('api/cover/'+id).then(function(data) {
                 console.log(data);
                 $scope.form = data;
             });
         }
 
-
-        function loadPhotos() {
-            dataFactory.httpRequest('api/product/review/' + $stateParams.id).then(function(data) {
+        function loadCovers() {
+            dataFactory.httpRequest('api/cover').then(function(data) {
                 $scope.photos = data;
                 console.log($scope.photos);
             });
         }
 
-        loadPhotos();
+        loadCovers();
 
         $scope.saveDisable = function(){
             $scope.loading = true;
-            dataFactory.httpRequest('api/photo/delete/'+ $scope.form.id ,'DELETE').then(function(data) {
+            dataFactory.httpRequest('api/cover/'+ $scope.form.id ,'DELETE').then(function(data) {
                 $(".modal").modal("hide");
                 Notification.success('Successfully saved');
                 //$scope.loading = false;
-                loadPhotos();
+                loadCovers();
             });
         }
 

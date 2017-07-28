@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use DB;
+use Illuminate\Support\Facades\Input;
 
 class CategoriesController extends Controller
 {

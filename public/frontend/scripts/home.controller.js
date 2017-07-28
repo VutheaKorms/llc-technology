@@ -47,8 +47,8 @@ angular.module('app')
                     return response.data;
                 },function(){
                     $.gritter.add({
-                        title: 'Application',
-                        text: 'An error occured while processing your request.'
+                        //title: 'Application',
+                        //text: 'An error occured while processing your request.'
                     });
                 });
                 return promise;
@@ -68,6 +68,15 @@ angular.module('app')
         $scope.libraryTemp = {};
         $scope.totalItemsTemp = {};
         $scope.totalItems = 0;
+
+        function loadSlider() {
+            dataFactory.httpRequest('api/cover').then(function(data) {
+                $scope.slider = data;
+                console.log($scope.slider);
+            });
+        }
+
+        loadSlider();
 
 
         $scope.pageChanged = function(newPage) {
@@ -127,6 +136,7 @@ angular.module('app')
         }
 
 
+
         $scope.showcat = { };
         $scope.setShowCat = function(id){
             $scope.showcat = {category_id: id };
@@ -137,6 +147,10 @@ angular.module('app')
             $scope.showcat = { };
             getResultsPage(1);
         }
+
+
+
+
 
     });
 

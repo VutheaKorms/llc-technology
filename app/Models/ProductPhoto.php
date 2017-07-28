@@ -8,6 +8,7 @@ class ProductPhoto extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+    protected $softDelete = true;
     protected $fillable = ['product_id','name', 'size','type','thumb_path','path','status','category_id'];
 
     public function products()

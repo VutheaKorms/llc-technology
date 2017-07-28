@@ -149,6 +149,8 @@
                 <ul class="dropdown-menu dropdown-user">
                     <li><a class="nav-link" ui-sref="dashboard.profile"><i class="fa fa-user fa-fw"></i> User Profiles</a>
                     </li>
+                    <li><a class="nav-link" ui-sref="dashboard.cover"><i class="fa fa-gear fa-fw"></i> Change Slide</a>
+                    </li>
                     <li><a class="nav-link" ui-sref="dashboard.setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
                     <li class="divider"></li>
