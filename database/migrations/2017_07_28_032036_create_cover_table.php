@@ -13,17 +13,19 @@ class CreateCoverTable extends Migration
      */
     public function up()
     {
-        Schema::create('covers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->string('size')->nullable();
-            $table->string('type')->nullable();
-            $table->string('thumb_path')->nullable();
-            $table->string('path')->nullable();
-            $table->boolean('status')->default(true);
-            $table->timestamps();
-
-        });
+//        Schema::create('covers', function (Blueprint $table) {
+//            $table->increments('id');
+//            $table->string('name')->nullable();
+//            $table->string('size')->nullable();
+//            $table->string('type')->nullable();
+//            $table->string('thumb_path')->nullable();
+//            $table->string('path')->nullable();
+//            $table->boolean('status')->default(true);
+//            $table->integer('user_role_id')->unsigned()->index();
+//            $table->foreign('user_role_id')->references('id')->on('user_roles');
+//            $table->timestamps();
+//
+//        });
     }
 
     /**

@@ -58,7 +58,7 @@ angular.module('app')
             dataFactory.httpRequest('api/products/' + $scope.id + '/edit').then(function(data) {
                 $scope.form = data;
                 $scope.selectedCategory = data.category_id;
-                console.log($scope.form);
+                $scope.selectedBrand = data.brand_id;
             });
         }
 
@@ -73,6 +73,8 @@ angular.module('app')
         $scope.selectedType = "New";
         $scope.types = [];
         $scope.editor = '';
+        $scope.selectedBrand = null;
+        $scope.brands = [];
 
 
         function goToUpload() {
@@ -81,6 +83,7 @@ angular.module('app')
         }
 
         $scope.saveEdit = function(){
+            $scope.form.brand_id = $scope.selectedBrand;
             $scope.form.category_id= $scope.selectedCategory;
             $scope.form.type= $scope.selectedType;
             $scope.form.product_color = $scope.selectedColor;
@@ -93,13 +96,26 @@ angular.module('app')
         }
 
         function loadCategory(status) {
-            dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
-                $scope.productCategory = data;
-                console.log($scope.productCategory);
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/categories/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.productCategory = data;
+                });
             });
         }
 
         loadCategory(1);
+
+        function loadBrand(status) {
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/brands/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.brands = data;
+                });
+            });
+        }
+
+        loadBrand(1);
 
         $scope.skip = function() {
             $state.go('dashboard.product-product');

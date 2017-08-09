@@ -10,7 +10,6 @@ angular.module('app')
                 url: API_URL,
             }).then(function (success){
                 $scope.products = success.data;
-                console.log(success);
             },function (error){
                 console.log(error, " can't get data.");
             });

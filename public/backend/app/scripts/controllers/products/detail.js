@@ -11,7 +11,6 @@ angular.module('app')
                 url: API_URL + $scope.id,
             }).then(function (success){
                 $scope.products = success.data[0];
-                console.log($scope.products);
             },function (error){
                 console.log(error, " can't get data.");
             });
@@ -25,7 +24,6 @@ angular.module('app')
                 url: 'api/product/review/' + $scope.id
             }).then(function (success){
                 $scope.photos = success.data;
-                console.log($scope.photos);
             },function (error){
                 console.log(error, " can't get data.");
             });

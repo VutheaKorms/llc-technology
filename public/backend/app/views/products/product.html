@@ -18,16 +18,19 @@
         <div class="col-lg-6">
             <div class="col-lg-3">
                 <div class="col-lg-2 pull-right">
-                    <!--<div class="btn-group">-->
-                        <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                            <!--Filter by <span class="caret"></span>-->
-                        <!--</button>-->
-                        <!--<ul class="dropdown-menu">-->
-                            <!--<li><a ui-sref=""><i class="fa fa-eye"></i> All</a></li>-->
-                            <!--<li><a href="#"><i class="fa-check-square-o"></i> Active</a></li>-->
-                            <!--<li><a href="#"><i class="fa fa-ban"></i> Disable</a></li>-->
-                        <!--</ul>-->
+
+
+                    <!--<div class="box-tools pull-right" style="display:inline-table">-->
+                        <!--<div class="input-group form-group pull-right">-->
+                            <!--<select ng-model="selectedBrand" ng-options="item.id as item.name for item in brands">-->
+                                <!--<option value="">Selected</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
                     <!--</div>-->
+
+
+                    <!--<button type="button" id="submitButton" class="btn btn-primary" ng-click="filterByBrandID(selectedBrand)">Go</button>-->
+
                 </div>
             </div>
             <div class="col-lg-9">
@@ -63,7 +66,7 @@
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Price</th>
-                                <th>Color</th>
+                                <th>Brand</th>
                                 <th>Category</th>
                                 <!--<th>Description</th>-->
                                 <th>Date</th>
@@ -82,7 +85,7 @@
                                 <td>{{value.product_name}}</td>
                                 <td>{{value.product_code}}</td>
                                 <td>{{value.price | currency}}</td>
-                                <td>{{value.product_color}}</td>
+                                <td>{{value.brands.name}}</td>
                                 <td>{{value.categories.name}}</td>
                                 <!--<td>{{value.description}}</td>-->
                                 <td>{{value.created_at}}</td>
@@ -99,7 +102,8 @@
                                         <ul class="dropdown-menu pull-right">
                                             <li><a ui-sref="dashboard.product-view({id: value.id})"><i class="fa fa-eye"></i> View</a></li>
                                             <li style="cursor: pointer; cursor: hand;" ng-if="value.status != 0"><a ui-sref="dashboard.product-edit({id: value.id})"><i class="fa fa-pencil"></i> Update</a></li>
-                                            <li style="cursor: pointer; cursor: hand;"><a data-toggle="modal" ng-click="remove(value,$index)"><i class="fa fa-trash-o"></i> Delete</a></li>
+                                            <!--<li style="cursor: pointer; cursor: hand;"><a data-toggle="modal" ng-click="remove(value,$index)"><i class="fa fa-trash-o"></i> Delete</a></li>-->
+                                            <li style="cursor: pointer; cursor: hand;"><a data-toggle="modal" ng-click="edit(value.id)" data-target="#remove-data"><i class="fa fa-trash-o"></i> Delete</a></li>
                                             <li style="cursor: pointer; cursor: hand;" ng-if="value.status != 0"><a data-toggle="modal" ng-click="edit(value.id)" data-target="#disable-data"><i class="fa fa-ban"></i> Disable</a></li>
                                         </ul>
                                     </div>
@@ -257,6 +261,30 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
+
+    <div class="modal fade" id="remove-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST" name="disableItem" role="form" ng-submit="saveDelete()">
+                    <input ng-model="form.id" type="hidden" placeholder="Name" name="name" class="form-control" />
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">Remove Product</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <h3>Delete</h3>
+                            <p>Are you want to remove this <b>{{form.product_name}}</b> product??</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning create-crud">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="disable-data" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

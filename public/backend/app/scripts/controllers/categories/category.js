@@ -65,16 +65,20 @@ angular.module('app')
 
         function getResultsPage(pageNumber) {
             if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/categories?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/categories/account/' + $scope.users.id + '?search='+$scope.searchText +'&page='+pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }else{
-                dataFactory.httpRequest('api/categories?page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/categories/account/' + $scope.users.id  +'?page=' +pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }
         }
@@ -100,13 +104,14 @@ angular.module('app')
         $scope.form = {
             name: $scope.name,
             brand_id: $scope.brand_id,
+            user_id: $scope.users,
             description: $scope.description
         }
 
         $scope.saveAdd = function(){
             $scope.loading = true;
             $scope.form.brand_id = $scope.selectedBrand;
-            dataFactory.httpRequest('api/categories','POST',{},$scope.form).then(function(data) {
+            dataFactory.httpRequest('api/categories/post','POST',{},$scope.form).then(function(data) {
                 $scope.data.push(data);
                 $(".modal").modal("hide");
                 Notification.success('Successfully saved');
@@ -117,7 +122,7 @@ angular.module('app')
         }
 
         $scope.edit = function(id){
-            dataFactory.httpRequest('api/categories/'+id+'/edit').then(function(data) {
+            dataFactory.httpRequest('api/categories/edit/'+id).then(function(data) {
                 console.log(data);
                 $scope.form = data;
                 $scope.selectedBrand = data.brand_id;
@@ -148,6 +153,7 @@ angular.module('app')
             });
         }
 
+
         $scope.show = function(id){
             dataFactory.httpRequest('api/categories/'+id).then(function(data) {
                 console.log(data);
@@ -155,16 +161,15 @@ angular.module('app')
             });
         }
 
-        $scope.remove = function(item,index){
-            var result = confirm("Are you sure delete this brand?");
-            if (result) {
-                dataFactory.httpRequest('api/categories/'+item.id,'DELETE').then(function(data) {
-                    Notification.success('Successfully deleted');
-                    $scope.data.splice(index,1);
-                    getResultsPage(1);
-                });
-            }
+        $scope.saveDelete = function(){
+            $scope.loading = true;
+            dataFactory.httpRequest('api/categories/'+ $scope.form.id ,'DELETE').then(function(data) {
+                $(".modal").modal("hide");
+                Notification.success('Successfully deleted');
+                getResultsPage(1);
+            });
         }
+
 
         $scope.goBack = function() {
             window.history.back();
@@ -176,16 +181,18 @@ angular.module('app')
             $scope.form.description = null;
         }
 
-        //$scope.selectedBrand = null;
-        //$scope.brands = [];
+        $scope.selectedBrand = null;
+        $scope.brands = [];
 
-        //function loadBrand(status) {
-        //    dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-        //        $scope.brands = data;
-        //        console.log($scope.brands);
-        //    });
-        //}
-        //
-        //loadBrand(1);
+        function loadBrand(status) {
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('/api/brands/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.brands = data;
+                });
+            });
+        }
+
+        loadBrand(1);
 
     });

@@ -53,5 +53,28 @@ angular.module('app')
     })
     .controller('MainCtrl', function(dataFactory,$scope, $state, $stateParams, Notification) {
 
+      getResultsPage(1);
+
+      function getResultsPage(pageNumber) {
+          dataFactory.httpRequest('api/brands?page='+pageNumber).then(function(data) {
+            $scope.data = data.data;
+            $scope.totalItems = data.total;
+            $scope.totalBrands = $scope.totalItems;
+          });
+
+          dataFactory.httpRequest('api/categories?page='+pageNumber).then(function(data) {
+            $scope.data = data.data;
+            $scope.totalItems = data.total;
+            $scope.totalCategories = $scope.totalItems;
+          });
+
+          dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
+            $scope.data = data.data;
+            $scope.totalItems = data.total;
+            $scope.totalProducts = $scope.totalItems;
+          });
+
+        }
+
 
     });

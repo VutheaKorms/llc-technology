@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>LLC-TECHNOLOGY</title>
+    <title>168myshop.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <link id="callCss" rel="stylesheet" href="/frontend/themes/bootshop/bootstrap.min.css" media="screen"/>
+    <link rel="stylesheet" href="/bower_components/angular-loading-bar/build/loading-bar.min.css">
 
     <link href="/frontend/themes/css/base.css" rel="stylesheet" media="screen"/>
     <!-- Bootstrap style responsive -->
@@ -23,6 +24,7 @@
     <link rel="apple-touch-icon-precomposed" href="/frontend/themes/images/ico/apple-touch-icon-57-precomposed.png">
     <style type="text/css" id="enject"></style>
     <link href="/css/pagination.css" rel="stylesheet" media="screen"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 
     <script src="/bower_components/angular/angular.min.js"></script>
     <script src="/frontend/scripts/app.js"></script>
@@ -33,9 +35,12 @@
     <script src="/backend/app/helper/myHelper.js"></script>
 
     <script src="/bower_components/angular-encode-uri/dist/angular-encode-uri.min.js"></script>
+    <script src="/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.3.0.js"></script>
 
 </head>
 <body ng-app="app" ng-controller="IdDetailController">
+<div id="loading-bar-container"></div>
 <div id="header">
     <div class="container">
         <div id="logoArea" class="navbar">
@@ -46,10 +51,13 @@
             </a>
             <div class="navbar-inner">
                 {{--<a class="brand" href="index.html"><img src="frontend/themes/images/logo.png" alt="Bootsshop"/></a>--}}
-                <a class="brand" href="/"><img src="/frontend/themes/images/ico-cart.png" alt="LCC-TECHNOLOGY"/> LLC-TECHNOLOTY</a>
+                <a class="brand" href="/"><img src="/frontend/themes/images/ico-cart.png" alt="168myshop.com"/> 168myshop.com</a>
                 <form class="form-inline navbar-search" method="post" >
                     <input class="srchTxt" ng-model="searchText" type="text" placeholder="search..."/>
-                    <button type="button" id="submitButton" class="btn btn-primary" ng-click="searchDB()">Go</button>
+                    <select ng-model="selectedBrands" ng-options="item.id as item.name for item in brands">
+                        <option value="">Selected</option>
+                    </select>
+                    <button type="button" id="submitButton" class="btn btn-primary" ng-click="filterByBrandID(selectedBrands)">Go</button>
                 </form>
                 <ul id="topMenu" class="nav pull-right">
                     <li class=""><a href="/about.html">About</a></li>
@@ -70,30 +78,15 @@
             <!-- Sidebar ================================================== -->
             <div id="sidebar" class="span3">
 
-                <ul id="sideManu" class="nav nav-tabs nav-stacked">
-                    <li class="subMenu open"><a> CATEGORIES </a>
+                <accordion>
+                    <accordion-group heading="[[group.name]]" ng-click="getId(group.id)" ng-repeat="group in brands">
                         <ul>
-                            <li><a class="active" href="" ng-click="setAllPro()"><i class="icon-chevron-right"></i> All </a></li>
-                            <li ng-repeat='c in productCategory'><a class="active" href="" ng-click='setShowCat(c.id)'><i class="icon-chevron-right"></i> [[ c.name ]] </a></li>
+                            <li><a class="active" href="" ng-click="getAll()"><i class="icon-chevron-right"></i> All </a></li>
+                            <li ng-repeat="size in Category" value="[[size.id]]" ng-model="selectedprop" ng-click="searchDB1(size.id)"><a class="active" href=""><i class="icon-chevron-right"></i> [[size.name]]</a></li>
                         </ul>
-                    </li>
-                </ul>
+                    </accordion-group>
+                </accordion>
                 <br/>
-
-                {{--<div class="thumbnail">--}}
-                    {{--<img src="/frontend/themes/images/products/panasonic.jpg" alt="Bootshop panasonoc New camera"/>--}}
-                    {{--<div class="caption">--}}
-                        {{--<h5>Panasonic</h5>--}}
-                        {{--<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>--}}
-                    {{--</div>--}}
-                {{--</div><br/>--}}
-                {{--<div class="thumbnail">--}}
-                    {{--<img src="/frontend/themes/images/products/kindle.png" title="Bootshop New Kindel" alt="Bootshop Kindel">--}}
-                    {{--<div class="caption">--}}
-                        {{--<h5>Kindle</h5>--}}
-                        {{--<h4 style="text-align:center"><a class="btn" href="product_details.html"> <i class="icon-zoom-in"></i></a> <a class="btn" href="#">Add to <i class="icon-shopping-cart"></i></a> <a class="btn btn-primary" href="#">$222.00</a></h4>--}}
-                    {{--</div>--}}
-                {{--</div><br/>--}}
                 <div class="thumbnail">
                     <img src="/frontend/themes/images/payment_methods.png" title="Bootshop Payment Methods" alt="Payments Methods">
                     <div class="caption">
@@ -146,10 +139,10 @@
                                         <span ng-if="{{$object->status}} == 1">Available</span>
                                         <span ng-if="{{$object->status}} == 0">Not Available</span>
                                     </span></label>
-                                {{--<div class="controls">--}}
-                                    {{--<input type="number" class="span1" placeholder="Qty."/>--}}
-                                    {{--<button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>--}}
-                                {{--</div>--}}
+                                <div class="controls">
+                                    <input type="number" class="span1" placeholder="Qty."/>
+                                    <button type="submit" class="btn btn-large btn-primary pull-right"> Add to cart <i class=" icon-shopping-cart"></i></button>
+                                </div>
                             </div>
                         </form>
 
@@ -189,7 +182,8 @@
                                 <table class="table table-bordered">
                                     <tbody>
                                     <tr class="techSpecRow"><th colspan="2">Product Details</th></tr>
-                                    <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">{{ $object->category_name }}</td></tr>
+                                    <tr class="techSpecRow"><td class="techSpecTD1">Brand: </td><td class="techSpecTD2">{{ $object->brand_name }}</td></tr>
+                                    <tr class="techSpecRow"><td class="techSpecTD1">Category: </td><td class="techSpecTD2">{{ $object->category_name }}</td></tr>
                                     <tr class="techSpecRow"><td class="techSpecTD1">Model:</td><td class="techSpecTD2">{{ $object->product_name }}</td></tr>
                                     <tr class="techSpecRow"><td class="techSpecTD1">Released on:</td><td class="techSpecTD2">{{ $object->created_at }}</td></tr>
                                     <tr class="techSpecRow"><td class="techSpecTD1">Specification:</td><td class="techSpecTD2">{!! $object->specification !!}</td></tr>
@@ -225,7 +219,7 @@
                                 <hr class="soft"/>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="listView">
-                                        <div class="row" dir-paginate="value in data | itemsPerPage:6 | filter:showcat | orderBy:mySortFunction" total-items="totalItems">
+                                        <div class="row" dir-paginate="value in data | itemsPerPage:6  | orderBy:mySortFunction" total-items="totalItems">
                                             <div class="span2">
                                                 <img src="../../../../../[[value.photo_name]]" height="142" width="142">
                                             </div>
@@ -258,7 +252,7 @@
                                     </div>
                                     <div class="tab-pane  active" id="blockView">
                                         <ul class="thumbnails">
-                                            <li class="span3" dir-paginate="value in data | itemsPerPage:6  | filter:showcat | orderBy:mySortFunction " total-items="totalItems">
+                                            <li class="span3" dir-paginate="value in data | itemsPerPage:6  | orderBy:mySortFunction " total-items="totalItems">
                                                 <div class="thumbnail">
                                                     <span ng-if="value.product_type == 'New'"><i class="tag"></i></span>
                                                     <b style="color: #120293;"> &nbsp; [[value.category_name]]</b>
@@ -329,7 +323,7 @@
                 <a href="#"><img width="60" height="60" src="/frontend/themes/images/youtube.png" title="youtube" alt="youtube"/></a>
             </div>
         </div>
-        <p class="pull-right">&copy; LLC-TECHNOLOGY</p>
+        <p class="pull-right">&copy; 168myshop.com</p>
     </div><!-- Container End -->
 </div>
 <!-- Placed at the end of the document so the pages load faster ============================================= -->

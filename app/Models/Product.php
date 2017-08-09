@@ -18,13 +18,15 @@ class Product extends Model
         'type',
         'specification',
         'category_id',
+        'brand_id',
         'status',
+        'user_id',
     ];
 
-//    public function brand()
-//    {
-//        return $this->belongsTo('App\Models\Brand','brand_id');
-//    }
+    public function brands()
+    {
+        return $this->belongsTo('App\Models\Brand','brand_id');
+    }
 
     /**
      * Get the category that the product belongs to.

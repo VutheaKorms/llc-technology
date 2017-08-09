@@ -63,7 +63,7 @@ angular.module('app')
         //};
 
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
+            //console.info('onCompleteItem', fileItem, response, status, headers);
         };
         uploader.onCompleteAll = function() {
             //console.info('onCompleteAll');

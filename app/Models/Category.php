@@ -18,12 +18,14 @@ class Category extends Model
         'name',
         'description',
         'status',
+        'brand_id',
+        'user_id',
     ];
 
-//    public function brand()
-//    {
-//        return $this->belongsTo('App\Models\Brand','brand_id');
-//    }
+    public function brands()
+    {
+        return $this->belongsTo('App\Models\Brand','brand_id');
+    }
 
     public function products()
     {

@@ -1,20 +1,4 @@
-{{--@extends('layouts.app')--}}
 
-{{--@section('content')--}}
-{{--<div class="container">--}}
-{{--<div class="row">--}}
-{{--<div class="col-md-8 col-md-offset-2">--}}
-{{--<div class="panel panel-default">--}}
-{{--<div class="panel-heading">Dashboard</div>--}}
-
-{{--<div class="panel-body">--}}
-{{--You are logged in!--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--</div>--}}
-{{--@endsection--}}
 
 <!doctype html>
 <html class="no-js" lang="{{ config('app.locale') }}">
@@ -62,6 +46,7 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
     <script src="bower_components/Chart.js/Chart.min.js"></script>
+    <script src="bower_components/angular-md5/angular-md5.js"></script>
 
     <script src="bower_components/angular-ui-notification/dist/angular-messages.js"></script>
     <script src="bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
@@ -127,7 +112,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/admin#/dashboard/home"><p style="color:#1f648b;">LLC-TECHNOLOGY</p></a>
+            <a class="navbar-brand" href="/admin#/dashboard/home"><p style="color:#1f648b;">168myshop.com</p></a>
         </div>
         <!-- /.navbar-header -->
         {{--<!--<header-notification></header-notification>-->--}}

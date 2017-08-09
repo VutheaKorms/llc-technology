@@ -62,7 +62,6 @@ angular.module('app')
         $scope.selectedCategory = null;
         $scope.productCategory = [];
 
-
         $scope.pageChanged = function(newPage) {
             getResultsPage(newPage);
         };
@@ -70,16 +69,20 @@ angular.module('app')
 
         function getResultsPage(pageNumber) {
             if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/products?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/products/account/' + $scope.users.id + '?search='+$scope.searchText +'&page='+pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }else{
-                dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/products/account/' + $scope.users.id  +'?page=' +pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }
         }
@@ -124,7 +127,6 @@ angular.module('app')
         }
         $scope.edit = function(id){
             dataFactory.httpRequest('api/products/'+id+'/edit').then(function(data) {
-                console.log(data);
                 $scope.form = data;
                 $scope.selectedBrand = data.brand_id;
                 $scope.selectedCategory = data.category_id;
@@ -142,20 +144,18 @@ angular.module('app')
             });
         }
 
-        $scope.remove = function(item,index){
-            var result = confirm("Are you sure delete this item?");
-            if (result) {
-                dataFactory.httpRequest('api/products/'+item.id,'DELETE').then(function(data) {
-                    $scope.data.splice(index,1);
-                    Notification.success('Successfully deleted');
-                    getResultsPage(1);
-                });
-            }
+        $scope.saveDelete = function(){
+            $scope.loading = true;
+
+            dataFactory.httpRequest('api/products/'+ $scope.form.id ,'DELETE').then(function(data) {
+                $(".modal").modal("hide");
+                Notification.success('Successfully deleted');
+                getResultsPage(1);
+            });
         }
 
         $scope.show = function(id){
             dataFactory.httpRequest('api/products/'+id).then(function(data) {
-                console.log(data);
                 $scope.form = data;
             });
         }
@@ -163,24 +163,6 @@ angular.module('app')
         $scope.goBack = function() {
             window.history.back();
         };
-
-        //function loadBrand(status) {
-        //    dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-        //        $scope.brands = data;
-        //        console.log($scope.brands);
-        //    });
-        //}
-        //
-        //loadBrand(1);
-
-        function loadCategory(status) {
-            dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
-                $scope.productCategory = data;
-                console.log($scope.productCategory);
-            });
-        }
-
-        loadCategory(1);
 
         function clear() {
             $scope.form.description = "";
@@ -196,7 +178,6 @@ angular.module('app')
             dataFactory.httpRequest('api/products/disable/'+$scope.form.id,'PUT',{},$scope.form).then(function(data) {
                 $(".modal").modal("hide");
                 $scope.data = apiModifyTable($scope.data,data.id,data);
-                console.log($scope.data);
                 Notification.success('Successfully saved');
                 $scope.loading = false;
                 getResultsPage(1);

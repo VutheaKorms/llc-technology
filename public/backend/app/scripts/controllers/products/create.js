@@ -76,16 +76,20 @@ angular.module('app')
 
         function getResultsPage(pageNumber) {
             if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/products?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/products/account/' + $scope.users.id + '?search='+$scope.searchText +'&page='+pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }else{
-                dataFactory.httpRequest('api/products?page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.users = data;
+                    dataFactory.httpRequest('api/products/account/' + $scope.users.id  +'?page=' +pageNumber).then(function(data) {
+                        $scope.data = data.data;
+                        $scope.totalItems = data.total;
+                    });
                 });
             }
         }
@@ -113,19 +117,19 @@ angular.module('app')
             product_code: $scope.product_code,
             price: $scope.price,
             brand_id: $scope.selectedBrand,
+            user_id: $scope.users,
             category_id: $scope.selectedCategory,
             description: $scope.description,
             specification: $scope.specification
         }
 
         $scope.saveAdd = function(){
-            //$scope.form.brand_id = $scope.selectedBrand;
+            $scope.form.brand_id = $scope.selectedBrand;
             $scope.form.category_id= $scope.selectedCategory;
             $scope.form.type= $scope.selectedType;
             $scope.form.product_color = $scope.selectedColor;
             dataFactory.httpRequest('api/products','POST',{},$scope.form).then(function(data) {
                 $scope.data = data;
-                console.log(data);
                 Notification.success('Successfully saved');
                 clear();
                 getResultsPage(1);
@@ -139,12 +143,12 @@ angular.module('app')
 
         $scope.edit = function(id){
             dataFactory.httpRequest('api/products/'+id+'/edit').then(function(data) {
-                console.log(data);
                 $scope.form = data;
                 $scope.selectedBrand = data.brand_id;
                 $scope.selectedCategory = data.category_id;
             });
         }
+
         $scope.saveEdit = function(){
             $scope.form.brand_id = $scope.selectedBrand;
             $scope.form.category_id= $scope.selectedCategory;
@@ -152,25 +156,13 @@ angular.module('app')
                 $(".modal").modal("hide");
                 $scope.data = apiModifyTable($scope.data,data.id,data);
                 Notification.success('Successfully saved');
-                console.log($scope.data);
                 getResultsPage(1);
             });
         }
 
-        $scope.remove = function(item,index){
-            var result = confirm("Are you sure delete this item?");
-            if (result) {
-                dataFactory.httpRequest('api/products/'+item.id,'DELETE').then(function(data) {
-                    $scope.data.splice(index,1);
-                    Notification.success('Successfully deleted');
-                    getResultsPage(1);
-                });
-            }
-        }
 
         $scope.show = function(id){
             dataFactory.httpRequest('api/products/'+id).then(function(data) {
-                console.log(data);
                 $scope.form = data;
             });
         }
@@ -179,30 +171,34 @@ angular.module('app')
             window.history.back();
         };
 
-        //function loadBrand(status) {
-        //    dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-        //        $scope.brands = data;
-        //        console.log($scope.brands);
-        //    });
-        //}
-        //
-        //loadBrand(1);
-
         function loadCategory(status) {
-            dataFactory.httpRequest('api/categories/status/' + status).then(function(data) {
-                $scope.productCategory = data;
-                console.log($scope.productCategory);
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/categories/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.productCategory = data;
+                });
             });
         }
 
         loadCategory(1);
+
+        function loadBrand(status) {
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/brands/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.brands = data;
+                });
+            });
+        }
+
+        loadBrand(1);
 
         function clear() {
             $scope.form.description = "";
             $scope.form.product_name= "";
             $scope.form.product_code="";
             $scope.form.price= "";
-            //$scope.selectedBrand = null;
+            $scope.selectedBrand = null;
             $scope.selectedCategory = null;
         }
 
@@ -211,7 +207,6 @@ angular.module('app')
             dataFactory.httpRequest('api/products/disable/'+$scope.form.id,'PUT',{},$scope.form).then(function(data) {
                 $(".modal").modal("hide");
                 $scope.data = apiModifyTable($scope.data,data.id,data);
-                console.log($scope.data);
                 Notification.success('Successfully saved');
                 $scope.loading = false;
                 getResultsPage(1);

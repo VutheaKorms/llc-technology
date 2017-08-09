@@ -17,6 +17,8 @@ class CreateBrandsTable extends Migration
 //            $table->increments('id');
 //            $table->string('name', 50)->unique();
 //            $table->string('description', 255)->nullable();
+//            $table->integer('user_role_id')->unsigned()->index();
+//            $table->foreign('user_role_id')->references('id')->on('user_roles');
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();
 //            $table->softDeletes();

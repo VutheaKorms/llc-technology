@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use Session;
 use DB;
+use Auth;
+use App\User;
+use Illuminate\Support\Facades\Input;
 
 class ProductsController extends Controller
 {
@@ -17,15 +20,15 @@ class ProductsController extends Controller
         $this->response = $response;
     }
 
-    public function index(Request $request)
+    public function index(Request $request, $user_id)
     {
         $input = $request->all();
         if($request->get('search')){
-            $products = Product::with('categories')->where("product_name", "LIKE", "%{$request->get('search')}%")
+            $products = Product::with('categories','brands')->where('user_id',$user_id)->where("product_name", "LIKE", "%{$request->get('search')}%")
                 ->orWhere('created_at','LIKE',"%{$request->get('search')}%")
                 ->paginate(6);
         }else{
-            $products = Product::with('categories')->paginate(6);
+            $products = Product::with('categories','brands')->where('user_id', $user_id)->paginate(6);
         }
         return response($products);
     }
@@ -42,8 +45,10 @@ class ProductsController extends Controller
             'products.product_code as product_code',
             'products.product_color as product_color',
             'products.type as product_type',
+            'brands.name as brand_name',
             'categories.name as category_name')
             ->join('categories','categories.id', '=' ,'products.category_id')
+            ->join('brands','brands.id', '=' ,'products.brand_id')
             ->where('products.id', $id)
             ->get();
 
@@ -79,12 +84,28 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        Product::where("id",$id)->update($input);
-        $item = Product::find($id);
-        Session::put('product_id', $item->id);
-        Session::put('category_id', $item->category_id);
-        return response($item);
+        $user = new User();
+        $user->fill(Input::get());
+        $user->user_id = Auth::user()->id;
+
+        $product= Product::findOrFail($id);
+        $product->product_name = $request['product_name'];
+        $product->product_code = $request['product_code'];
+        $product->product_color = $request['product_color'];
+        $product->price = $request['price'];
+        $product->category_id = $request['category_id'];
+        $product->type = $request['type'];
+        $product->specification = $request['specification'];
+        $product->brand_id = $request['brand_id'];
+        $product->description = $request['description'];
+        $product->user_id = "$user->user_id";
+
+        $product->save();
+
+        Session::put('product_id', $product->id);
+        Session::put('category_id', $product->category_id);
+
+        return response($product);
     }
 
     public function editUpload(Request $request)
@@ -111,13 +132,36 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        $input = $request->all();
-        $create = Product::create($input);
+        $user = new User();
+        $user->fill(Input::get());
+        $user->user_id = Auth::user()->id;
 
-        Session::put('product_id', $create->id);
-        Session::put('category_id', $create->category_id);
+        $product = new Product();
+        $product->product_name = $request['product_name'];
+        $product->product_code = $request['product_code'];
+        $product->product_color = $request['product_color'];
+        $product->price = $request['price'];
+        $product->category_id = $request['category_id'];
+        $product->type = $request['type'];
+        $product->specification = $request['specification'];
+        $product->brand_id = $request['brand_id'];
+        $product->description = $request['description'];
+        $product->user_id = "$user->user_id";
 
-        return response($create);
+        $product->save();
+
+        Session::put('product_id', $product->id);
+        Session::put('category_id', $product->category_id);
+
+        return response($product);
+
+//        $input = $request->all();
+//        $create = Product::create($input);
+//
+//        Session::put('product_id', $create->id);
+//        Session::put('category_id', $create->category_id);
+//
+//        return response($create);
     }
 
 

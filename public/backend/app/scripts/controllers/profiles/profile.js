@@ -1,30 +1,3 @@
-//'use strict';
-//
-//angular.module('app')
-//    .controller('ProfileCtrl', function($scope, $http, $state, $stateParams) {
-//        $scope.id = $stateParams.id;
-//        var API_URL = 'api/users/';
-//
-//        function loadData() {
-//            $http({
-//                method: 'GET',
-//                url: API_URL + $scope.id,
-//            }).then(function (success){
-//                $scope.brands = success.data;
-//                console.log(success);
-//            },function (error){
-//                console.log(error, " can't get data.");
-//            });
-//        }
-//
-//        loadData();
-//
-//        $scope.goBack = function() {
-//            window.history.back();
-//        }
-//
-//    });
-
 
 'use strict';
 
@@ -69,8 +42,8 @@ angular.module('app')
                     return response.data;
                 },function(){
                     $.gritter.add({
-                        title: 'Application',
-                        text: 'An error occured while processing your request.'
+                        //title: 'Application',
+                        //text: 'An error occured while processing your request.'
                     });
                 });
                 return promise;
@@ -78,52 +51,28 @@ angular.module('app')
         };
         return myService;
     })
-    .controller('ProfileCtrl', function(dataFactory,$scope, $state, $stateParams, Notification) {
+    .controller('ProfileCtrl', function(dataFactory,$scope, $state, $stateParams, Notification, md5) {
         $scope.id = $stateParams.id;
-
         $scope.data = [];
-        $scope.libraryTemp = {};
-        $scope.totalItemsTemp = {};
-        $scope.totalItems = 0;
 
-        $scope.pageChanged = function(newPage) {
-            getResultsPage(newPage);
+        $scope.inputType = 'password';
+
+        // Hide & show password function
+        $scope.hideShowPassword = function(){
+            if ($scope.inputType == 'password')
+                $scope.inputType = 'text';
+            else
+                $scope.inputType = 'password';
         };
-        getResultsPage(1);
 
-        function getResultsPage(pageNumber) {
-            if(! $.isEmptyObject($scope.libraryTemp)){
-                dataFactory.httpRequest('api/users?search='+$scope.searchText+'&page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
+        getResultsPage();
+
+        function getResultsPage() {
+                dataFactory.httpRequest('api/test').then(function(data) {
+                    $scope.data = data;
                 });
-            }else{
-                dataFactory.httpRequest('api/users?page='+pageNumber).then(function(data) {
-                    $scope.data = data.data;
-                    $scope.totalItems = data.total;
-                    console.log($scope.data);
-                });
-            }
         }
 
-        $scope.searchDB = function(){
-            if($scope.searchText.length >= 1){
-                if($.isEmptyObject($scope.libraryTemp)){
-                    $scope.libraryTemp = $scope.data;
-                    $scope.totalItemsTemp = $scope.totalItems;
-                    $scope.data = {};
-                }
-                getResultsPage(1);
-            }else{
-                if(! $.isEmptyObject($scope.libraryTemp)){
-                    $scope.data = $scope.libraryTemp ;
-                    $scope.totalItems = $scope.totalItemsTemp;
-                    $scope.libraryTemp = {};
-                }
-                getResultsPage(1);
-            }
-        }
 
         $scope.form = {
             name: $scope.name,
@@ -139,13 +88,12 @@ angular.module('app')
                 Notification.success('Successfully saved');
                 $scope.loading = false;
                 clear();
-                getResultsPage(1);
+                getResultsPage();
             });
         }
 
         $scope.edit = function(id){
             dataFactory.httpRequest('api/users/'+id+'/edit').then(function(data) {
-                console.log(data);
                 $scope.form = data;
             });
         }
@@ -157,13 +105,12 @@ angular.module('app')
                 console.log($scope.data);
                 Notification.success('Successfully saved');
                 $scope.loading = false;
-                getResultsPage(1);
+                getResultsPage();
             });
         }
 
         $scope.show = function(id){
             dataFactory.httpRequest('api/users/'+id).then(function(data) {
-                console.log(data);
                 $scope.form = data;
             });
         }
@@ -174,9 +121,31 @@ angular.module('app')
                 dataFactory.httpRequest('api/users/'+item.id,'DELETE').then(function(data) {
                     Notification.success('Successfully deleted');
                     $scope.data.splice(index,1);
-                    getResultsPage(1);
+                    getResultsPage();
                 });
             }
+        }
+
+        $scope.saveEnable = function(){
+            $scope.loading = true;
+            dataFactory.httpRequest('api/user/enable/'+$scope.form.id,'PUT',{},$scope.form).then(function(data) {
+                $(".modal").modal("hide");
+                $scope.data = apiModifyTable($scope.data,data.id,data);
+                Notification.success('Successfully saved');
+                $scope.loading = false;
+                getResultsPage();
+            });
+        }
+
+        $scope.saveDisable = function(){
+            $scope.loading = true;
+            dataFactory.httpRequest('api/user/disable/'+$scope.form.id,'PUT',{},$scope.form).then(function(data) {
+                $(".modal").modal("hide");
+                $scope.data = apiModifyTable($scope.data,data.id,data);
+                Notification.success('Successfully saved');
+                $scope.loading = false;
+                getResultsPage();
+            });
         }
 
         $scope.goBack = function() {

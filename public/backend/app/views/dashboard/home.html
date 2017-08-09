@@ -8,30 +8,32 @@
     <!--&lt;!&ndash; /.row &ndash;&gt;-->
     <div class="row">
 
-        <stats number="7" comments="Total Categories" colour="primary" type="comments"></stats>
-        <stats number="7" comments="Total Products" colour="primary" type="comments"></stats>
-        <stats number="12" comments="Total Customers" colour="primary" type="user"></stats>
+        <stats ui-sref="dashboard.brand" number="{{totalBrands}}" comments="Total Brands" colour="primary" type="comments"></stats>
+        <stats ui-sref="dashboard.productCategory" number="{{totalCategories}}" comments="Total Categories" colour="primary" type="comments"></stats>
+        <stats ui-sref="dashboard.product" number="{{totalProducts}}" comments="Total Products" colour="primary" type="comments"></stats>
+        <stats number="7" comments="Total View" colour="primary" type="comments"></stats>
+        <stats number="0" comments="Total Customers" colour="primary" type="user"></stats>
         <stats number="18" comments="Total Orders" colour="yellow" type="shopping-cart"></stats>
 
     </div>
 
-    <!-- /.panel -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
-                </div>
-                <!-- /.panel-heading -->
-                <timeline></timeline>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
-        </div>
-        <!-- /.col-lg-8 -->
+    <!--&lt;!&ndash; /.panel &ndash;&gt;-->
+    <!--<div class="row">-->
+        <!--<div class="col-lg-12">-->
+            <!--<div class="panel panel-default">-->
+                <!--<div class="panel-heading">-->
+                    <!--<i class="fa fa-clock-o fa-fw"></i> Responsive Timeline-->
+                <!--</div>-->
+                <!--&lt;!&ndash; /.panel-heading &ndash;&gt;-->
+                <!--<timeline></timeline>-->
+                <!--&lt;!&ndash; /.panel-body &ndash;&gt;-->
+            <!--</div>-->
+            <!--&lt;!&ndash; /.panel &ndash;&gt;-->
+        <!--</div>-->
+        <!--&lt;!&ndash; /.col-lg-8 &ndash;&gt;-->
 
-        <!-- /.col-lg-4 -->
-    </div>
+        <!--&lt;!&ndash; /.col-lg-4 &ndash;&gt;-->
+    <!--</div>-->
 
 </div>
 

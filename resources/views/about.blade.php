@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>LLC-TECHNOLOGY</title>
+    <title>168myshop.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -35,7 +35,7 @@
             </a>
             <div class="navbar-inner">
                 {{--<a class="brand" href="index.html"><img src="frontend/themes/images/logo.png" alt="Bootsshop"/></a>--}}
-                <a class="brand" href="/"><img src="/frontend/themes/images/ico-cart.png" alt="LCC-TECHNOLOGY"/> LLC-TECHNOLOTY</a>
+                <a class="brand" href="/"><img src="/frontend/themes/images/ico-cart.png" alt="168myshop.com"/> 168myshop.com</a>
                 <form class="form-inline navbar-search" action="/">
                     <input class="srchTxt" ng-model="searchText" type="text" placeholder="search..."/>
                     <button type="submit" id="submitButton" class="btn btn-primary" ng-click="searchDB()">Go</button>
@@ -143,7 +143,7 @@
                 <a href="#"><img width="60" height="60" src="/frontend/themes/images/youtube.png" title="youtube" alt="youtube"/></a>
             </div>
         </div>
-        <p class="pull-right">&copy; LLC-TECHNOLOGY</p>
+        <p class="pull-right">&copy; 168myshop.com</p>
     </div><!-- Container End -->
 </div>
 <!-- Placed at the end of the document so the pages load faster ============================================= -->

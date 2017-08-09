@@ -17,6 +17,8 @@ class CreateOrderDetailsTable extends Migration
 //            $table->increments('id');
 //            $table->integer('order_id')->unsigned();
 //            $table->integer('product_id')->unsigned()->index();
+//            $table->integer('user_role_id')->unsigned()->index();
+//            $table->foreign('user_role_id')->references('id')->on('user_roles');
 //            $table->integer('quantity');
 //            $table->float('price');
 //            $table->float('sub_total');

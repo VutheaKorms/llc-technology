@@ -67,7 +67,7 @@ angular.module('app')
         });
 
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            console.info('onCompleteItem', fileItem, response, status, headers);
+            //console.info('onCompleteItem', fileItem, response, status, headers);
         };
 
         function goToBack() {
@@ -91,7 +91,6 @@ angular.module('app')
 
         $scope.edit = function(id){
             dataFactory.httpRequest('api/photo/'+id).then(function(data) {
-                console.log(data);
                 $scope.form = data;
             });
         }
@@ -100,7 +99,6 @@ angular.module('app')
         function loadPhotos() {
             dataFactory.httpRequest('api/product/review/' + $stateParams.id).then(function(data) {
                 $scope.photos = data;
-                console.log($scope.photos);
             });
         }
 

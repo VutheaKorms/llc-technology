@@ -12,6 +12,7 @@ angular
     'angularFileUpload',
     'simditor',
     'ngSanitize',
+    'angular-md5',
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider' ,'$locationProvider', 'NotificationProvider',
       function ($stateProvider,$urlRouterProvider,$ocLazyLoadProvider,$locationProvider, NotificationProvider) {
@@ -140,37 +141,37 @@ angular
         }
     })
 
-    //.state('dashboard.brand',{
-    //    url:'/brand',
-    //    controller: 'BrandCtrl',
-    //    templateUrl:'backend/app/views/brands/brand.html',
-    //    resolve: {
-    //        loadMyFiles:function($ocLazyLoad) {
-    //            return $ocLazyLoad.load({
-    //                name:'app',
-    //                files:[
-    //                    'backend/app/scripts/controllers/brands/brand.js'
-    //                ]
-    //            })
-    //        }
-    //    }
-    //})
-    //
-    //.state('dashboard.brand-view',{
-    //    url:'/brand/view/:id',
-    //    controller: 'BrandDetailCtrl',
-    //    templateUrl:'backend/app/views/brands/brand-detail.html',
-    //    resolve: {
-    //        loadMyFiles:function($ocLazyLoad) {
-    //            return $ocLazyLoad.load({
-    //                name:'app',
-    //                files:[
-    //                    'backend/app/scripts/controllers/brands/brand-detail.js'
-    //                ]
-    //            })
-    //        }
-    //    }
-    //})
+    .state('dashboard.brand',{
+        url:'/brand',
+        controller: 'BrandCtrl',
+        templateUrl:'backend/app/views/brands/brand.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/brands/brand.js'
+                    ]
+                })
+            }
+        }
+    })
+
+    .state('dashboard.brand-view',{
+        url:'/brand/view/:id',
+        controller: 'BrandDetailCtrl',
+        templateUrl:'backend/app/views/brands/brand-detail.html',
+        resolve: {
+            loadMyFiles:function($ocLazyLoad) {
+                return $ocLazyLoad.load({
+                    name:'app',
+                    files:[
+                        'backend/app/scripts/controllers/brands/brand-detail.js'
+                    ]
+                })
+            }
+        }
+    })
 
     .state('dashboard.product',{
         url:'/product',

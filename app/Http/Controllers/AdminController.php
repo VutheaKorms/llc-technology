@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,6 +14,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin');
+        $user = Auth::user();
+        //return view('admin')->with(['user' => $user]);
+        return view('admin', ['user' => $user]);
     }
+
+
 }
