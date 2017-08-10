@@ -97,7 +97,7 @@ angular.module('app')
 
         function loadBrand(status) {
             dataFactory.httpRequest('api/brands/status/' + status).then(function(data) {
-                $scope.brands = data;;
+                $scope.brands = data;
             });
         }
 

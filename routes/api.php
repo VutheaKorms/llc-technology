@@ -36,6 +36,7 @@ Route::delete('brands/{id}','BrandsController@destroy');
 Route::put('brands/{brand}','BrandsController@update');
 Route::put('brands/disable/{id}','BrandsController@disable');
 Route::get('brands/status/{status}/acc/{id}','BrandsController@getAllActive');
+Route::get('brands/status/{status}','ItemController@getAllBrandActive');
 
 //Route::resource('categories','CategoriesController');
 Route::get('categories/account/{id}','CategoriesController@index');
@@ -47,6 +48,7 @@ Route::delete('categories/{id}','CategoriesController@destroy');
 Route::put('categories/disable/{id}','CategoriesController@disable');
 Route::get('categories/status/{status}/acc/{id}','CategoriesController@getAllActive');
 Route::get('categories/status/{status}/brand/{brand}','CategoriesController@getCateByBrand');
+Route::get('categories/status/{status}','ItemController@getAllActive');
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('products/account/{id}','ProductsController@index');
@@ -71,6 +73,10 @@ Route::delete('cover/{id}','UploadController@destroyPhoto');
 Route::get('cover/{id}','UploadController@editPhoto');
 Route::get('productByCate/{cateId}','CategoriesController@getProductByCate');
 Route::get('productByCategory/{id}','ItemController@getProByCategory');
+
+Route::get('address','ContactsController@index');
+Route::get('contacts/acc/{acc}','ContactsController@getContact');
+Route::get('contacts/status/{status}/acc/{acc}','ContactsController@getAllActive');
 
 
 

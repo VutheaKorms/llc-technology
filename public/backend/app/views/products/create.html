@@ -1,7 +1,7 @@
 <div ng-controller="ProductCreateCtrl">
     <div class="row">
         <div class="col-lg-11">
-            <h1 class="page-header">Product Management</h1>
+            <h1 class="page-header">Items Management</h1>
         </div>
         <div class="col-lg-1">
             <h1 class="page-header"><button type="button" class="btn btn-default" ng-click="goBack();">Back</button></h1>
@@ -11,85 +11,199 @@
 
     <div>
 
-        <form method="POST" name="addItem" role="form" ng-submit="saveAdd()">
+        <form class="form-horizontal">
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Brand Type</label>
+                <div class="col-sm-10">
+                    <select ng-model="selectedBrand" class="form-control" ng-options="b.name for b in brands" required>
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-xs-10" ng-if="selectedBrand">
+                <label class="col-sm-2 control-label">Category</label>
+                <div class="col-sm-10">
+                    <select ng-model="selectedCategory" class="form-control" required
+                        ng-options="item.name for item in productCategory | filter: {brand_id: selectedBrand.id} ">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
 
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Name : </strong>
-                            <div class="form-group">
-                                <input ng-model="form.product_name" type="text" placeholder="Name" name="name" class="form-control" required />
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Price : </strong>
-                            <div class="form-group input-group">
-                                <span class="input-group-addon">$</span>
-                                <input ng-model="form.price" type="text" placeholder="Price" name="price" class="form-control" required />
-                                <span class="input-group-addon">.00</span>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Color : </strong>
-                            <div class="form-group">
-                                <select ng-model="selectedColor" class="form-control" ng-selected= "{{item.id == selectedColor}}"
-                                        ng-options="item.id as item.name for item in colors">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Brand : </strong>
-                            <div class="form-group">
-                                <select ng-model="selectedBrand" class="form-control" required
-                                        ng-options="item.id as item.name for item in brands">
-                                    <option value="">Select</option>
-                                </select>
-                                <!--<input ng-model="form.pro_cate_id" type="text" placeholder="ProductType" name="title" class="form-control" required />-->
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Code : </strong>
-                            <div class="form-group">
-                                <input ng-model="form.product_code" type="text" placeholder="Code" name="code" class="form-control" />
-                            </div>
-                        </div>
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Price</label>
+                <div class="col-sm-10">
+                <!--<span class="input-group-addon">$</span>-->
+                <input ng-model="form.price" type="text" placeholder="Price" name="price" class="form-control" required />
+                <!--<span class="input-group-addon">.00</span>-->
+                </div>
+            </div>
 
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Category : </strong>
-                            <div class="form-group">
-                                <select ng-model="selectedCategory" class="form-control" required
-                                        ng-options="item.id as item.name for item in productCategory">
-                                    <option value="">Select</option>
-                                </select>
-                                <!--<input ng-model="form.pro_cate_id" type="text" placeholder="ProductType" name="title" class="form-control" required />-->
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong> Specification : </strong>
-                            <div simditor ng-model="form.specification" placeholder="some placeholder"></div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Type : </strong>
-                            <div class="form-group">
-                                <select ng-model="selectedType" class="form-control" ng-selected= "{{item.id == selectedType}}"
-                                        ng-options="item.id as item.name for item in types">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-6">
-                            <strong>Description : </strong>
-                            <div class="form-group" >
-                            <textarea ng-model="form.description" rows="6" class="form-control">
-                            </textarea>
-                            </div>
-                        </div>
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                    <textarea rows="6" class="form-control" ng-model="form.description"></textarea>
+                </div>
+            </div>
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Specification</label>
+                <div class="col-sm-10">
+                    <div simditor ng-model="form.specification" placeholder="some placeholder"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember me
+                        </label>
                     </div>
-                    <br />
+                </div>
+            </div>
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Contact Person</label>
+                <div class="col-sm-10">
+                    <select ng-model="selectedContact" class="form-control" required
+                            ng-options="item.contact_name for item in contacts">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Contact Person</label>
+                <div class="col-sm-10">
+                    <select ng-model="selectedContact" class="form-control" required
+                            ng-options="item.contact_name for item in contacts">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-xs-5">
+                <!--<label class="col-sm-6 control-label">Phone Number</label>-->
+                <div class="col-sm-10">
+
+                </div>
+            </div>
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Email Address</label>
+                <div class="col-sm-10">
+                    <input ng-model="selectedContact.email_address" readonly type="email" placeholder="Email Address" name="email" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group col-xs-10">
+                <label class="col-sm-2 control-label">Contact Person</label>
+                <div class="col-sm-10">
+                    <input ng-model="selectedContact.address.address2" readonly type="email" placeholder="Email Address" name="email" class="form-control" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
                     <button type="button" class="btn btn-default" ng-click="goBack();">Cancel</button>
                     <button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Save</button>
+                </div>
+            </div>
 
         </form>
+        <br /> <br /><br /><br /><br />
+
+        <!--<form method="POST" name="addItem" role="form" ng-submit="saveAdd()">-->
+
+            <!---->
+                    <!--<div class="row">-->
+
+                        <!--<div class="col-xs-12 col-sm-6 col-md-6">-->
+                            <!--<strong>Brand : </strong>-->
+                            <!--<div class="form-group">-->
+                                <!--<select ng-model="selectedBrand" class="form-control" required-->
+                                        <!--ng-options="p.name for p in  brands">-->
+                                    <!--<option value="">Select</option>-->
+                                <!--</select>-->
+
+                                <!--&lt;!&ndash;<select ng-model="selectedBrand" class="form-control" required&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-options="item.id as item.name for item in brands">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<option value="">Select</option>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-model="form.pro_cate_id" type="text" placeholder="ProductType" name="title" class="form-control" required />&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-12 col-sm-6 col-md-6" ng-if="selectedBrand">-->
+                            <!--<strong>Category : </strong>-->
+                            <!--<div class="form-group">-->
+                                <!--<select ng-model="selectedCategory" class="form-control" required-->
+                                        <!--ng-options="item.name for item in productCategory | filter: {brand_id: selectedBrand.id} ">-->
+                                    <!--<option value="">Select</option>-->
+                                <!--</select>-->
+                                <!--&lt;!&ndash;<select ng-model="selectedCategory" class="form-control" required&ndash;&gt;-->
+                                <!--&lt;!&ndash;ng-options="item.id as item.name for item in productCategory">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<option value="">Select</option>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-model="form.pro_cate_id" type="text" placeholder="ProductType" name="title" class="form-control" required />&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Name : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-model="form.product_name" type="text" placeholder="Name" name="name" class="form-control" required />&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Price : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group input-group">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<span class="input-group-addon">$</span>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-model="form.price" type="text" placeholder="Price" name="price" class="form-control" required />&ndash;&gt;-->
+                                <!--&lt;!&ndash;<span class="input-group-addon">.00</span>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Color : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<select ng-model="selectedColor" class="form-control" ng-selected= "{{item.id == selectedColor}}"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;ng-options="item.id as item.name for item in colors">&ndash;&gt;-->
+                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Code : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<input ng-model="form.product_code" type="text" placeholder="Code" name="code" class="form-control" />&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong> Specification : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div simditor ng-model="form.specification" placeholder="some placeholder"></div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Type : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<select ng-model="selectedType" class="form-control" ng-selected= "{{item.id == selectedType}}"&ndash;&gt;-->
+                                        <!--&lt;!&ndash;ng-options="item.id as item.name for item in types">&ndash;&gt;-->
+                                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="col-xs-12 col-sm-6 col-md-6">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<strong>Description : </strong>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="form-group" >&ndash;&gt;-->
+                            <!--&lt;!&ndash;<textarea ng-model="form.description" rows="6" class="form-control">&ndash;&gt;-->
+                            <!--&lt;!&ndash;</textarea>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<br />-->
+                    <!--<button type="button" class="btn btn-default" ng-click="goBack();">Cancel</button>-->
+                    <!--<button type="submit" ng-disabled="addItem.$invalid" class="btn btn-primary">Save</button>-->
+
+        <!--</form>-->
 
     </div>
 

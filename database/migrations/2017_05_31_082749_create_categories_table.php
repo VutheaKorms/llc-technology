@@ -19,8 +19,8 @@ class CreateCategoriesTable extends Migration
 //            $table->string('description', 255)->nullable();
 //            $table->integer('brand_id')->unsigned()->index();
 //            $table->foreign('brand_id')->references('id')->on('brands');
-//            $table->integer('user_role_id')->unsigned()->index();
-//            $table->foreign('user_role_id')->references('id')->on('user_roles');
+//            $table->integer('user_id')->unsigned()->index();
+//            $table->foreign('user_id')->references('id')->on('users');
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();
 //            $table->softDeletes();

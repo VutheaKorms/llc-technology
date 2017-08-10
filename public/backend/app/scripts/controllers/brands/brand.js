@@ -75,9 +75,10 @@ angular.module('app')
             }else{
                 dataFactory.httpRequest('api/test').then(function(data) {
                     $scope.users = data;
-                    dataFactory.httpRequest('/api/brands/account/' + $scope.users.id  +'?page=' +pageNumber).then(function(data) {
+                    dataFactory.httpRequest('api/brands/account/' + $scope.users.id  +'?page=' +pageNumber).then(function(data) {
                         $scope.data = data.data;
                         $scope.totalItems = data.total;
+                        console.log($scope.data);
                     });
                 });
             }

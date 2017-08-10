@@ -22,8 +22,8 @@ class CreateProductsTable extends Migration
 //            $table->float('price')->default(0);
 //            $table->string('type', 50)->nullable();
 //            $table->integer('category_id')->unsigned()->index();
-//            $table->integer('user_role_id')->unsigned()->index();
-//            $table->foreign('user_role_id')->references('id')->on('user_roles');
+//            $table->integer('user_id')->unsigned()->index();
+//            $table->foreign('user_id')->references('id')->on('users');
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();
 //            $table->softDeletes();

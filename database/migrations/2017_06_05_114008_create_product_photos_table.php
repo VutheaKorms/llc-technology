@@ -19,8 +19,6 @@ class CreateProductPhotosTable extends Migration
 //            $table->foreign('product_id')->references('id')->on('products');
 //            $table->integer('category_id')->unsigned();
 //            $table->foreign('category_id')->references('id')->on('categories');
-//            $table->integer('user_role_id')->unsigned()->index();
-//            $table->foreign('user_role_id')->references('id')->on('user_roles');
 //            $table->string('name')->nullable();
 //            $table->string('size')->nullable();
 //            $table->string('type')->nullable();

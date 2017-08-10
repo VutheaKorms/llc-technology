@@ -60,7 +60,6 @@
                                 <th>No</th>
                                 <th>Name</th>
                                 <th>Brand Name</th>
-                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -76,7 +75,6 @@
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{value.name}}</td>
                                 <td>{{value.brands.name}}</td>
-                                <td>{{value.description}}</td>
                                 <td>{{value.created_at}}</td>
                                 <td>
                                     <p ng-if="value.status == 1"><span class="label label-info">Active</span></p>

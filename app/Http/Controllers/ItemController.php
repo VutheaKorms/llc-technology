@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Product;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Access\Response;
 use DB;
@@ -14,6 +14,21 @@ class ItemController extends Controller
     public function __construct(Response $response)
     {
         $this->response = $response;
+    }
+
+    public function getAllBrandActive($status) {
+        $brands = Brand::where('status', $status)
+            ->orderBy('name', 'desc')
+            ->take(10)
+            ->get();
+        return response($brands);
+    }
+
+    public function getAllActive($status) {
+        $categories = Category::where('status', $status)
+            ->orderBy('name', 'asc')
+            ->get();
+        return response($categories);
     }
 
     public function index(Request $request)

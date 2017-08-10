@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderDetailsTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,19 @@ class CreateOrderDetailsTable extends Migration
      */
     public function up()
     {
-//        Schema::create('order_details', function (Blueprint $table) {
+//        Schema::create('contacts', function (Blueprint $table) {
 //            $table->increments('id');
-//            $table->integer('order_id')->unsigned();
-//            $table->integer('product_id')->unsigned()->index();
+//            $table->string('contact_name');
+//            $table->string('phone_number1');
+//            $table->string('phone_number2')->nullable();
+//            $table->string('email_address')->nullable();
+//            $table->integer('address_id')->unsigned()->index();
+//            $table->foreign('address_id')->references('id')->on('addresses');
 //            $table->integer('user_id')->unsigned()->index();
 //            $table->foreign('user_id')->references('id')->on('users');
-//            $table->integer('quantity');
-//            $table->float('price');
-//            $table->float('sub_total');
 //            $table->boolean('status')->default(true);
 //            $table->timestamps();
-//            $table->softDeletes();
 //
-//            $table->foreign('order_id')->references('id')->on('orders');
 //        });
     }
 
@@ -37,6 +36,6 @@ class CreateOrderDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('contacts');
     }
 }

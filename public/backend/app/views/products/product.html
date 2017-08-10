@@ -1,7 +1,7 @@
 <div ng-controller="ProductCtrl">
     <div class="row">
         <div class="col-lg-11">
-            <h1 class="page-header">Product Management</h1>
+            <h1 class="page-header">Items Management</h1>
         </div>
         <div class="col-lg-1">
             <h1 class="page-header"><button type="button" class="btn btn-default" ng-click="goBack();">Back</button></h1>
@@ -64,7 +64,6 @@
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Code</th>
                                 <th>Price</th>
                                 <th>Brand</th>
                                 <th>Category</th>
@@ -83,7 +82,6 @@
                             <tr class="odd gradeX" dir-paginate="value in data | itemsPerPage:6" total-items="totalItems">
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{value.product_name}}</td>
-                                <td>{{value.product_code}}</td>
                                 <td>{{value.price | currency}}</td>
                                 <td>{{value.brands.name}}</td>
                                 <td>{{value.categories.name}}</td>

@@ -68,6 +68,8 @@ angular.module('app')
         $scope.types = [];
         $scope.editor = '';
 
+        $scope.selectedBrand = $scope.brands[0];
+
 
         $scope.pageChanged = function(newPage) {
             getResultsPage(newPage);
@@ -171,16 +173,7 @@ angular.module('app')
             window.history.back();
         };
 
-        function loadCategory(status) {
-            dataFactory.httpRequest('api/test').then(function(data) {
-                $scope.users = data;
-                dataFactory.httpRequest('api/categories/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
-                    $scope.productCategory = data;
-                });
-            });
-        }
 
-        loadCategory(1);
 
         function loadBrand(status) {
             dataFactory.httpRequest('api/test').then(function(data) {
@@ -192,6 +185,30 @@ angular.module('app')
         }
 
         loadBrand(1);
+
+        function loadCategory(status) {
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/categories/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.productCategory = data;
+                });
+            });
+        }
+
+        loadCategory(1);
+
+        function loadContact(status) {
+            dataFactory.httpRequest('api/test').then(function(data) {
+                $scope.users = data;
+                dataFactory.httpRequest('api/contacts/status/' + status +'/acc/' + $scope.users.id).then(function(data) {
+                    $scope.contacts = data
+                    console.log($scope.contacts);
+                });
+            });
+        }
+
+        loadContact(1);
+
 
         function clear() {
             $scope.form.description = "";
